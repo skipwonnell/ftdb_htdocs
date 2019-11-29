@@ -1,0 +1,4 @@
+<?php
+
+	print "NOT FOUND";
+?>
