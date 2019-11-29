@@ -45,7 +45,6 @@ function getHits($conn, $pageId)
 
 function systemIsBusy($conn)
 {
-	return;
 	$result = mysqli_query($conn, "select * from nf_busy") or die (mysqli_error($conn));
 	$line = mysqli_fetch_array($result);
 
@@ -102,6 +101,11 @@ function listSomeTrials($conn, $searchString, $maximum, $dateFlag)
 	print "</style>";
 
 	print "<table border='0'>";
+
+	if( $searchString == "GSP" ) 
+		$searchString = "German Shorthaired Pointer";
+	else if( $searchString == "GWP" ) 
+		$searchString = "German Wirehaired Pointer";
 
 	getConnection();
 
@@ -212,6 +216,7 @@ $stakes = array(
 	"NGDC" => "National Gun Dog Championship" ,
 	"NAGDC" => "National Amateur Gun Dog Championship" ,
 	"NWGDC" => "National Walking Gun Dog Championship" ,
+	"NGOGDC" => "National Grand Open Gun Dog Champ",
 	"NFC" => "National Championship" );
 
 	foreach( array_keys($stakes) as $key )
