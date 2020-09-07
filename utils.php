@@ -94,6 +94,8 @@ function getEarliestTrial($conn)
 
 function listSomeTrials($conn, $searchString, $maximum, $dateFlag)
 {
+
+	$origSearchString = $searchString;
 	print "<style type='text/css'>";
 	print "td { padding-left: 4}";
 	print "td { padding-right: 4}";
@@ -184,7 +186,7 @@ function listSomeTrials($conn, $searchString, $maximum, $dateFlag)
 
 	}
 	print "</table>";
-	if ( $searchString != false && $i == $maximum )
+	if ( $origSearchString != false && $i == $maximum )
 	{
 		print "<p>More exist, only displaying ".$maximum."<br>";
 	}
