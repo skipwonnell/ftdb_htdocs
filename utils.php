@@ -101,11 +101,8 @@ function listSomeTrials($conn, $searchString, $maximum, $dateFlag)
 
 	print "<table border='0'>";
 
-	if( $searchString == "GSP" ) 
-		$searchString = "German Shorthaired Pointer";
-	else if( $searchString == "GWP" ) 
-		$searchString = "German Wirehaired Pointer";
-
+	$searchString = str_replace("GSP", "German Shorthaired Pointer", $searchString);
+	$searchString = str_replace("GWP", "German Wirehaired Pointer", $searchString);
 	$searchString = addslashes($searchString);
 
 	if( empty($searchString) ) $searchString = '%';
@@ -121,6 +118,10 @@ function listSomeTrials($conn, $searchString, $maximum, $dateFlag)
 		$query = $query." order by startDate desc";
 	else
 		$query = $query." order by nfid desc";
+
+
+	//print "<br>".$query;
+	//print "<br>".$searchString;
 
 	$stmt = $conn->prepare($query);
 	$stmt->bind_param('s', $searchString); // 's' specifies the variable type => 'string'
