@@ -1,6 +1,5 @@
+<?php session_start() ?>
 <?php
-
-
 
 
 function getTotalHits($conn)
@@ -172,7 +171,7 @@ function listSomeTrials($conn, $searchString, $maximum, $dateFlag)
 		print "<td valign='top'>";
 
 		//print "&#160 ".$row{fmtDate}."</td><td>";
-		print " <a href='showTrialResults.php4?id=".$trial_nfid.
+		print " <a href='showTrialResults.php4?id=".encryptIt($trial_nfid).
 			"'>".$cn."</a>";
 
 	//	if( $vcount > 0 )
@@ -321,7 +320,7 @@ function listSomeDogs($conn, $dogSearchString, $ownerSearchString, $breed, $maxi
 
 			print "<tr><td>&#160</td>";
 			print "<td>";
-			print " <a href='dog.php4?id=".$dog_nfid."'>".$registeredName."</a>";
+			print " <a href='dog.php4?id=".encryptIt($dog_nfid)."'>".$registeredName."</a>";
 			print " - ".$row{'breed'};
 			print " - ".$row{'owners'};
 			print "</td></tr>";

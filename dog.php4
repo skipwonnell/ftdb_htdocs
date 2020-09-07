@@ -1,6 +1,8 @@
+<?php session_start() ?>
 
 <?php
 
+include 'header.html';
 include 'getConnection.php';
 include 'utils.php';
 
@@ -8,7 +10,7 @@ include 'utils.php';
 $conn=getConnection(); if ( systemIsBusy($conn) == true ) exit();
 
 
-$dog_nfid = $_GET["id"];
+$dog_nfid = decryptIt($_GET["id"]);
 
 
 if( $dog_nfid != null )
@@ -88,7 +90,6 @@ print "<head><meta name=\"description\" content=\"AKC Field Trial results for ".
 print "<body>\n";
 print "<title>".$display."</title>\n";
 
-include 'header.html';
 
 
 
@@ -258,7 +259,7 @@ $row3 = mysqli_fetch_array($result3);
 
     $startDate = $row5{'startDate'};
 
-    print "<tr><td><a href='showTrialResults.php4?id=$event_nfid'>";
+    print "<tr><td><a href='showTrialResults.php4?id=".encryptIt($event_nfid)."'>";
 	print $cn."</a></td><td>$startDate</td>";
     // print "<td><a href=stake.php?id=$stake_nfid>$stake</a></td><td align=center>$placement</td>";
 
@@ -284,9 +285,9 @@ $row3 = mysqli_fetch_array($result3);
 		$j2str = $judgeB{'akcName'};
 
 	print "<td align='left'>";
-	print "<a href=judgeList.php4?id=".$judgeA{'NFID'}.">".$j1str."</a>";
+	print "<a href=judgeList.php4?id=".encryptIt($judgeA{'NFID'}).">".$j1str."</a>";
 	print "</td><td align='left'>";
-	print "<a href=judgeList.php4?id=".$judgeB{'NFID'}.">".$j2str."</a>";
+	print "<a href=judgeList.php4?id=".encryptIt($judgeB{'NFID'}).">".$j2str."</a>";
 	print "</td";
 	
 	print "</tr>";

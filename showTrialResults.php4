@@ -1,18 +1,34 @@
+<?php session_start() ?>
 <?php
+include 'header.html';
+
 include 'getConnection.php';
 include 'utils.php';
 
 
 
 $conn = getConnection(); if ( systemIsBusy($conn) == true ) exit();
+$event_nfid= decryptIt($_GET["id"]);
 
-$event_nfid= $_GET["id"];
+/* conversion to prepared statement
+print "$event_nfid";
+$stmt = $conn->prepare("SELECT eventNumber, clubName, location, city, state, DATE_FORMAT(startDate, '%b %d, %Y') fmtDate FROM nf_trial where nfid= ?");
+print "<br>1";
+$stmt->bind_param('s', $event_nfid); // 's' specifies the variable type => 'string'
+print "<br>2";
+$stmt->execute();
+print "<br>3";
+$result = $stmt->get_result();
+print "<br>4";
 
+while ($row = $result->fetch_assoc()) {
+		print "<br>GOTIT!";
+}
+ */
 
 $query = "SELECT eventNumber, clubName, location, city, state, DATE_FORMAT(startDate, '%b %d, %Y') fmtDate FROM nf_trial where nfid= $event_nfid";
 //$result = mysqli_query($conn, $query) or DIE("Could not Execute Query ".$query);
 $result = mysqli_query($conn, $query) or DIE("Could not Execute Query ");
-
 $row = mysqli_fetch_array($result);
 
 print "<html>\n";
@@ -25,7 +41,6 @@ $eventNumber=$row{'eventNumber'};
 
 print "<title>".$row{'clubName'}."</title>";
 
-include 'header.html';
 print "<p>";
 
 //$rv = getHits($_SERVER['REQUEST_URI']); 
@@ -76,7 +91,7 @@ print "<td>";
 	$judgeB = getJudge($conn, $judge2_nfid);
 
 
-	print "<a href=judgeList.php4?id=".$judge1_nfid.">";
+	print "<a href=judgeList.php4?id=".encryptIt($judge1_nfid).">";
 	if ( strlen($judgeA{'firstName'}) > 0 && strlen($judgeA{'lastName'}) > 0 )
 		$j1str = $judgeA{'firstName'}." ".$judgeA{'lastName'};
 	else
@@ -85,7 +100,7 @@ print "<td>";
 	print "</a> and ";
 
 
-	print "<a href=judgeList.php4?id=".$judge2_nfid.">";
+	print "<a href=judgeList.php4?id=".encryptIt($judge2_nfid).">";
 	if ( strlen($judgeB{'firstName'}) > 0 && strlen($judgeB{'lastName'}) > 0 )
 		$j2str = $judgeB{'firstName'}." ".$judgeB{'lastName'};
 	else
@@ -147,7 +162,7 @@ print "<td>";
 		if( $akcNumber != 'WITHHELD' )
 		{
 //			if ( $breed == "Vizsla" )
-				echo "<a href=dog.php4?id=$dog_nfid>";
+				echo "<a href=dog.php4?id=".encryptIt($dog_nfid).">";
 
 			if( $placement == 1 )
 				echo "<b>$name</b>";

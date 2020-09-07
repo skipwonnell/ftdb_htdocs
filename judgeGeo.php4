@@ -1,9 +1,10 @@
-
+<?php session_start() ?>
 <?php
 
+include 'header.html';
 include 'getConnection.php';
 include 'utils.php';
-$judge_id = $_GET["id"];
+$judge_id = decryptIt($_GET["id"]);
 $conn = getConnection(); if ( systemIsBusy($conn) == true ) exit();
 $judgeA = getJudge($conn, $judge_id);
 
@@ -22,7 +23,6 @@ $judgeA = getJudge($conn, $judge_id);
 
 
 <?php
-include 'header.html';
 
 
 
@@ -67,7 +67,7 @@ print "</table>";
 print "<p>";
 
 print "<a href=judgeList.php4?id="; 
-print $judgeA{'NFID'};
+print encryptIt($judgeA{'NFID'});
 print ">back to stakes</a>";
 
 print "</html>";

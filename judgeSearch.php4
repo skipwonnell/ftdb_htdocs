@@ -1,3 +1,4 @@
+<?php session_start() ?>
 
 <html>
 <title>Judge Search</title>
@@ -101,7 +102,7 @@ include "searchHelp.html";
 			$name = $akcName;
 
 
-		print "<a href=judgeList.php4?id=$nfid>".$name."</a>";
+		print "<a href=judgeList.php4?id=".encryptIt($nfid).">".$name."</a>";
 
 		print "</td></tr>";
 
