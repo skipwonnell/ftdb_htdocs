@@ -106,31 +106,30 @@ function listSomeTrials($conn, $searchString, $maximum, $dateFlag)
 	else if( $searchString == "GWP" ) 
 		$searchString = "German Wirehaired Pointer";
 
+	$searchString = addslashes($searchString);
+
+	if( empty($searchString) ) $searchString = '%';
+	else $searchString = '%'.$searchString.'%';
+	
 	getConnection();
 
 	$query = "SELECT nfid, eventNumber, clubName, location, city, state, DATE_FORMAT(startDate, '%m/%d/%y') fmtDate FROM nf_trial "; 
-
-
 	if ( $searchString != false )
-		$query = $query." where clubName like '%".addslashes($searchString)."%'";
-
+		$query = $query." where clubName like ?";
 
 	if( $dateFlag == 1 )
 		$query = $query." order by startDate desc";
 	else
 		$query = $query." order by nfid desc";
-		
 
-
-
-
-	//$result = mysqli_query($conn, $query) or DIE($query." failed: ".mysql_error());
-	$result = mysqli_query($conn, $query) or DIE(" query failed ");
-
+	$stmt = $conn->prepare($query);
+	$stmt->bind_param('s', $searchString); // 's' specifies the variable type => 'string'
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$stmt->close();
 
 		print "<tr><td>&#160</td>";
 		print "<td>";
-		// print "Club Name (Vizslas Placed)";
 		print "Club Name";
 		print "</td><td>";
 		print "City, ST";
@@ -156,18 +155,17 @@ function listSomeTrials($conn, $searchString, $maximum, $dateFlag)
 		$trial_nfid = $row{'nfid'};
 
 
-		$sql2 = "select count(distinct(nf_dog.nfid)) kount from ".
-			" nf_placement,nf_stake, nf_dog ".
-			" where nf_stake.event_nfid = ".$trial_nfid." and ".
-			" nf_placement.stake_nfid = nf_stake.nfid and ".
-			" nf_placement.dog_nfid = nf_dog.nfid and nf_dog.breed = 'Vizsla'";
+		//$sql2 = "select count(distinct(nf_dog.nfid)) kount from ".
+		//	" nf_placement,nf_stake, nf_dog ".
+		//	" where nf_stake.event_nfid = ".$trial_nfid." and ".
+		//	" nf_placement.stake_nfid = nf_stake.nfid and ".
+		//	" nf_placement.dog_nfid = nf_dog.nfid and nf_dog.breed = 'Vizsla'";
 	
-		//$result2 = mysqli_query($conn, $sql2) or DIE($sql2." FAILED ".mysql_error());	
-		$result2 = mysqli_query($conn, $sql2) or DIE("QUERY  FAILED ");	
+		//$result2 = mysqli_query($conn, $sql2) or DIE("QUERY  FAILED ");	
 
-		$line2 = mysqli_fetch_array($result2);
+		//$line2 = mysqli_fetch_array($result2);
 
-		$vcount = $line2{'kount'};
+		//$vcount = $line2{'kount'};
 		print "<td valign='top'>";
 
 		//print "&#160 ".$row{fmtDate}."</td><td>";
@@ -230,20 +228,24 @@ $stakes = array(
 
 function getJudge($conn, $judge_nfid)
 {
-	
-	$query = "SELECT * FROM nf_judge where nfid = '$judge_nfid'";
-	$result = mysqli_query($conn, $query) or DIE("Could not Execute Query ");
+	$stmt = $conn->prepare("SELECT * FROM nf_judge where nfid = ?");
+	$stmt->bind_param('s', $judge_nfid); // 's' specifies the variable type => 'string'
+	$stmt->execute();
+	$result = $stmt->get_result();
 	$row = mysqli_fetch_array($result);
+	$stmt->close();
 	return $row;
-	
 }
 
 
 function getStarters($conn, $stake_nfid)
 {
-	$query = "SELECT SUM(starters) sum FROM nf_starters where stake_nfid = '$stake_nfid'";
-	$result = mysqli_query($conn, $query) or DIE("Could not Execute Query ");
+	$stmt = $conn->prepare("SELECT SUM(starters) sum FROM nf_starters where stake_nfid = '$stake_nfid'");
+	$stmt->bind_param('s', $stake_nfid); // 's' specifies the variable type => 'string'
+	$stmt->execute();
+	$result = $stmt->get_result();
 	$starters = mysqli_fetch_array($result);
+	$stmt->close();
 	return $starters['sum'];
 }
 
@@ -284,24 +286,28 @@ function listSomeDogs($conn, $dogSearchString, $ownerSearchString, $breed, $maxi
 			}
 		}
 */
-		$query="SELECT * FROM nf_dog where registeredName like '%".$dss."%'".
-		" and owners like '%".$oss."%' ";
-
+		
+		$query="SELECT * FROM nf_dog where registeredName like ? and owners like ?";
 		if( $breed != 'Any' )
 			$query = $query." and breed = '$breed'";
 		$query = $query."  order by registeredName";
 
- //print("<tr><td>q: $query</tr></td>"); 
+	if( empty($dss) )  $dss='%';
+	else $dss = '%'.$dss.'%';
+	if( empty($oss) )  $oss='%';
+	else $oss = '%'.$oss.'%';
 
-		//$result = mysqli_query($conn, $query) or DIE($query." failed: ".mysql_error());
-		$result = mysqli_query($conn, $query) or DIE(" query failed ");
+	$stmt = $conn->prepare($query);
+	$stmt->bind_param('ss', $dss, $oss); 
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$stmt->close();
 
 
 		while  ( ($row = mysqli_fetch_array($result) )  && $i < $maximum)
 		{ 
 			$query2="select * from dogInfo where akcNumber = '".
 				$row{'akcNumber'}."'";
-			//$result2 = mysqli_query($conn, $query2) or DIE($query2." failed ".mysql_error());
 			$result2 = mysqli_query($conn, $query2) or DIE(" query failed ");
 			$row2 = mysqli_fetch_array($result2);
 

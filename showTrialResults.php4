@@ -10,25 +10,10 @@ include 'utils.php';
 $conn = getConnection(); if ( systemIsBusy($conn) == true ) exit();
 $event_nfid= decryptIt($_GET["id"]);
 
-/* conversion to prepared statement
-print "$event_nfid";
 $stmt = $conn->prepare("SELECT eventNumber, clubName, location, city, state, DATE_FORMAT(startDate, '%b %d, %Y') fmtDate FROM nf_trial where nfid= ?");
-print "<br>1";
 $stmt->bind_param('s', $event_nfid); // 's' specifies the variable type => 'string'
-print "<br>2";
 $stmt->execute();
-print "<br>3";
 $result = $stmt->get_result();
-print "<br>4";
-
-while ($row = $result->fetch_assoc()) {
-		print "<br>GOTIT!";
-}
- */
-
-$query = "SELECT eventNumber, clubName, location, city, state, DATE_FORMAT(startDate, '%b %d, %Y') fmtDate FROM nf_trial where nfid= $event_nfid";
-//$result = mysqli_query($conn, $query) or DIE("Could not Execute Query ".$query);
-$result = mysqli_query($conn, $query) or DIE("Could not Execute Query ");
 $row = mysqli_fetch_array($result);
 
 print "<html>\n";
@@ -59,10 +44,10 @@ print "<br>";
 print "</center> <p>";
 
 
-
-$query2 = "SELECT * FROM nf_stake where event_nfid= $event_nfid order by nfid";
-//$result2 = mysqli_query($conn, $query2) or DIE("Could not Execute Query ".$query2. " " . mysql_error());
-$result2 = mysqli_query($conn, $query2) or DIE("Could not Execute Query ");
+$stmt = $conn->prepare("SELECT * FROM nf_stake where event_nfid= ? order by nfid");
+$stmt->bind_param('s', $event_nfid); // 's' specifies the variable type => 'string'
+$stmt->execute();
+$result2 = $stmt->get_result();
 
 
 $i = 0;
