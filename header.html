@@ -38,7 +38,7 @@ html .fb_share_link { padding:2px 0 0 20px; height:16px; background:url(http://s
 		$iv_length = openssl_cipher_iv_length($ciphering); 
 		$_SESSION['encryption_iv'] = random_bytes($iv_length); 
 		$_SESSION['encryption_key'] = openssl_digest(random_int(10000000,20000000), 'MD5', TRUE); 
-	  	print $_SESSION['encryption_key'];
+//	  	print $_SESSION['encryption_key'];
 		header("Location: ftHome.php4");
 	}
 

@@ -16,6 +16,11 @@ $stmt->execute();
 $result = $stmt->get_result();
 $row = mysqli_fetch_array($result);
 
+if( $result === false || mysqli_num_rows($result) == 0 ) {
+	print "Doit";
+	header( "refresh:0;url=errorPage.php4?errorId=1001");
+}
+
 print "<html>\n";
 print "<head>";
 print "<meta name=\"description\" content=\"Results from the trial on ".$row{'fmtDate'}." held at ".$row{'location'}.", ".$row{'city'}.", ".$row{'state'}.".\"/>";

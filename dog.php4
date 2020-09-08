@@ -16,33 +16,18 @@ $dog_nfid = decryptIt($_GET["id"]);
 if( $dog_nfid != null )
 {
 	$query = "SELECT *, DATE_FORMAT(dateOfBirth, '%b %d, %Y') bd FROM nf_dog where nfid = $dog_nfid";
-	$result = mysqli_query($conn, $query) or DIE("Could not Execute Query ");
-	//$result = mysqli_query($conn, $query) or DIE($query." Could not Execute Query ");
-
-}
-else
-{
-	$akcNum = $_GET["akcNumber"];
-	if( $akcNum != null )
-	{
-		$query = "SELECT *, DATE_FORMAT(dateOfBirth, '%b %d, %Y') bd FROM nf_dog where akcNumber = '$akcNum'";
-//		$result=mysqli_query($conn, $query) or DIE ($query." Could not Execute Query ");
-		$result=mysqli_query($conn, $query) or DIE (" Could not Execute Query ");
-	}
+	$result = mysqli_query($conn, $query);
 }
 
 $row = mysqli_fetch_array($result);
 
 if( $row == null )
 {
-	print "NOT FOUND";
-	return;
+	header( "refresh:0;url=errorPage.php4?errorId=1002");
 }
 
 $akcNumber = $row{'akcNumber'};
 $dog_nfid = $row{'NFID'};
-
-
 
 $hasOwnerInfo = 0;
 $callName = "";

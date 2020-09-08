@@ -235,6 +235,12 @@ function getJudge($conn, $judge_nfid)
 	$stmt->bind_param('s', $judge_nfid); // 's' specifies the variable type => 'string'
 	$stmt->execute();
 	$result = $stmt->get_result();
+
+	if( $result === false || mysqli_num_rows($result) == 0 ) {
+		print "Doit";
+		header( "refresh:0;url=errorPage.php4?errorId=1003");
+	}
+
 	$row = mysqli_fetch_array($result);
 	$stmt->close();
 	return $row;
