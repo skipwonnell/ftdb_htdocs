@@ -1,0 +1,4 @@
+if( $result === false || mysqli_num_rows($result) == 0 ) {
+	print "Doit";
+	header( "refresh:0;url=errorPage.php4?errorId=1001");
+}

@@ -1,0 +1,5 @@
+$stmt = $conn->prepare("SELECT eventNumber, clubName, location, city, state, DATE_FORMAT(startDate, '%b %d, %Y') fmtDate FROM nf_trial where nfid= ?");
+$stmt->bind_param('s', $event_nfid);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = mysqli_fetch_array($result);

@@ -1,20 +1,13 @@
-<?php session_start() ?>
 
 <html>
 <title>Dog Search</title>
 
 <?php
-
-include 'header.html';
-
-include 'utils.php';
+include 'initPhp.php';
 include 'getConnection.php';
-
 $conn= getConnection(); 
-
+include 'header.html';
 ?>
-
-
 
 <SCRIPT>
 var postValues = new Array();
@@ -179,7 +172,6 @@ Breed:&#160 </td><td>
 
 
 </td><td valign=top>
-
 
 <?php
 	listSomeDogs($conn, $_POST{'dogSearchString'}, $_POST{'ownerSearchString'}, $breedValues[$_POST{'breedIndex'}], 150);

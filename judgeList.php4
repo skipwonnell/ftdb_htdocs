@@ -1,19 +1,24 @@
-<?php session_start() ?>
 <?php
-
-include 'header.html';
+include 'initPhp.php';
 include 'getConnection.php';
-include 'utils.php';
+
 $judge_id = decryptIt($_GET["id"]);
 $conn=getConnection(); if ( systemIsBusy($conn) == true ) exit();
 $judgeA = getJudge($conn, $judge_id);
 
+if( $judgeA == null ) {
+?> 
+<script type="text/javascript">
+   window.location.href = "errorPage.php4?errorId=1008"
+</script>
+<?php	
+}
+include 'header.html';
 ?>
 
 <html>
 <head>
 <meta name="description" content="Judging assignments for <?php print $judgeA{'akcName'}; ?> "/>
-
 </head>
 
 <title>
@@ -21,8 +26,6 @@ $judgeA = getJudge($conn, $judge_id);
 </title>
 
 <?php
-
-
 
 
 $query = "select  nf_trial.clubName, nf_trial.city, nf_trial.state, nf_trial.location,

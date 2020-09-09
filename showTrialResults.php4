@@ -1,26 +1,25 @@
-<?php session_start() ?>
 <?php
-include 'header.html';
-
+include 'initPhp.php';
 include 'getConnection.php';
-include 'utils.php';
-
-
 
 $conn = getConnection(); if ( systemIsBusy($conn) == true ) exit();
 $event_nfid= decryptIt($_GET["id"]);
 
 $stmt = $conn->prepare("SELECT eventNumber, clubName, location, city, state, DATE_FORMAT(startDate, '%b %d, %Y') fmtDate FROM nf_trial where nfid= ?");
-$stmt->bind_param('s', $event_nfid); // 's' specifies the variable type => 'string'
+$stmt->bind_param('s', $event_nfid);
 $stmt->execute();
 $result = $stmt->get_result();
 $row = mysqli_fetch_array($result);
 
-if( $result === false || mysqli_num_rows($result) == 0 ) {
-	print "Doit";
-	header( "refresh:0;url=errorPage.php4?errorId=1001");
+if( $row == null ) {
+?> 
+<script type="text/javascript">
+   window.location.href = "errorPage.php4?errorId=1006"
+</script>
+<?php	
 }
 
+include 'header.html';
 print "<html>\n";
 print "<head>";
 print "<meta name=\"description\" content=\"Results from the trial on ".$row{'fmtDate'}." held at ".$row{'location'}.", ".$row{'city'}.", ".$row{'state'}.".\"/>";

@@ -1,13 +1,13 @@
-<?php session_start() ?>
 <?php
 
-include 'header.html';
+include 'initPhp.php';
 include 'getConnection.php';
-include 'utils.php';
+
 $judge_id = decryptIt($_GET["id"]);
 $conn = getConnection(); if ( systemIsBusy($conn) == true ) exit();
 $judgeA = getJudge($conn, $judge_id);
 
+include 'header.html';
 
 ?>
 

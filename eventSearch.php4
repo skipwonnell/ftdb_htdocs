@@ -1,11 +1,10 @@
-<?php session_start() ?>
 <html>
 <title>Event Search</title>
 
 <?php
 
+include 'initPhp.php';
 include 'getConnection.php';
-include 'utils.php';
 include 'header.html';
 
 $conn = getConnection(); if ( systemIsBusy($conn) == true ) exit();

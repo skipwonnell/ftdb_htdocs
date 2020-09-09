@@ -1,6 +1,4 @@
-<?php session_start() ?>
 <?php
-
 
 function getTotalHits($conn)
 {
@@ -10,8 +8,6 @@ function getTotalHits($conn)
 	$line = mysqli_fetch_array($result);
 	return $line{'hitSum'};
 }
-
-
 
 function getHits($conn, $pageId)
 {
@@ -121,9 +117,6 @@ function listSomeTrials($conn, $searchString, $maximum, $dateFlag)
 	else
 		$query = $query." order by nfid desc";
 
-
-	//print "<br>".$query;
-	//print "<br>".$searchString;
 
 	$stmt = $conn->prepare($query);
 	$stmt->bind_param('s', $searchString); // 's' specifies the variable type => 'string'
@@ -277,34 +270,17 @@ function listSomeDogs($conn, $dogSearchString, $ownerSearchString, $breed, $maxi
 
 		$dss = addSlashes($dogSearchString);
 		$oss = addSlashes($ownerSearchString);
-
-/*
-		$done = false;
-		while ( ! $done )
-		{
-			$done = true;
-			foreach ($akcFrontTitles as $title)
-			{
-				$title=$title." ";
-				if( strncmp($dss, $title, strlen($title)) == 0)
-				{
-					$dss = substr($dss, strlen($title));
-					$done = false;
-					break;
-				}
-			}
-		}
-*/
 		
 		$query="SELECT * FROM nf_dog where registeredName like ? and owners like ?";
 		if( $breed != 'Any' )
 			$query = $query." and breed = '$breed'";
+
 		$query = $query."  order by registeredName";
 
-	if( empty($dss) )  $dss='%';
-	else $dss = '%'.$dss.'%';
-	if( empty($oss) )  $oss='%';
-	else $oss = '%'.$oss.'%';
+		if( empty($dss) )  $dss='%';
+		else $dss = '%'.$dss.'%';
+		if( empty($oss) )  $oss='%';
+		else $oss = '%'.$oss.'%';
 
 	$stmt = $conn->prepare($query);
 	$stmt->bind_param('ss', $dss, $oss); 
@@ -315,6 +291,7 @@ function listSomeDogs($conn, $dogSearchString, $ownerSearchString, $breed, $maxi
 
 		while  ( ($row = mysqli_fetch_array($result) )  && $i < $maximum)
 		{ 
+
 			$query2="select * from dogInfo where akcNumber = '".
 				$row{'akcNumber'}."'";
 			$result2 = mysqli_query($conn, $query2) or DIE(" query failed ");
@@ -322,24 +299,17 @@ function listSomeDogs($conn, $dogSearchString, $ownerSearchString, $breed, $maxi
 
 			$akcTitles = "";
 
-
 			$registeredName = getNameHttp($row2, $row{'registeredName'});
-
-			
 
 			$i++; 
 
-
-
 			$dog_nfid = $row{'NFID'};
-
 			print "<tr><td>&#160</td>";
 			print "<td>";
 			print " <a href='dog.php4?id=".encryptIt($dog_nfid)."'>".$registeredName."</a>";
 			print " - ".$row{'breed'};
 			print " - ".$row{'owners'};
 			print "</td></tr>";
-
 		}
 
 		if ( $i == 0 )

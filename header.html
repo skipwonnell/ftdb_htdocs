@@ -1,4 +1,3 @@
-
 <style type="text/css">
 .pointer { cursor: pointer }
 
@@ -26,40 +25,3 @@ html .fb_share_link { padding:2px 0 0 20px; height:16px; background:url(http://s
 </table>
 </font>
 <font face="arial">
-
-
-
-<?php
-  	session_start();
-
-	if( !isset($_SESSION['beenHere']) ) {
-		$_SESSION['beenHere'] = "yes";
-		$ciphering = "BF-CBC"; 
-		$iv_length = openssl_cipher_iv_length($ciphering); 
-		$_SESSION['encryption_iv'] = random_bytes($iv_length); 
-		$_SESSION['encryption_key'] = openssl_digest(random_int(10000000,20000000), 'MD5', TRUE); 
-//	  	print $_SESSION['encryption_key'];
-		header("Location: ftHome.php4");
-	}
-
-	function encryptIt($clearText) {
-		$ciphering = "BF-CBC"; 
-//		echo "Original String: " . $clearText . "\n"; 
-		$encryption = base64_encode(openssl_encrypt($clearText, $ciphering, 
-        	$_SESSION['encryption_key'], 0, $_SESSION['encryption_iv']));
-//		echo "Encrypted String: " . $encryption . "\n"; 
-		return $encryption;
-	}
-
-	
-	function decryptIt($cipherText) {
-		$ciphering = "BF-CBC"; 
-//		echo "Decrypting: " . $cipherText . "\n"; 
-		$decryption = openssl_decrypt (base64_decode($cipherText), $ciphering, 
-            	$_SESSION['encryption_key'], 0, $_SESSION['encryption_iv']); 
-//		echo "Decrypted String: " . $decryption . "\n"; 
-		return $decryption;
-	}
-  
-?> 
-

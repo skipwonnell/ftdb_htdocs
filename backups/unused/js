@@ -1,0 +1,5 @@
+?> 
+<script type="text/javascript">
+   window.location.href = "errorPage.php4?id=1008"
+</script>
+<?php	

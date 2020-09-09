@@ -1,30 +1,28 @@
-<?php session_start() ?>
-
 <?php
-
-include 'header.html';
+include 'initPhp.php';
 include 'getConnection.php';
-include 'utils.php';
-
-
-$conn=getConnection(); if ( systemIsBusy($conn) == true ) exit();
-
-
+$conn=getConnection(); 
 $dog_nfid = decryptIt($_GET["id"]);
-
 
 if( $dog_nfid != null )
 {
-	$query = "SELECT *, DATE_FORMAT(dateOfBirth, '%b %d, %Y') bd FROM nf_dog where nfid = $dog_nfid";
-	$result = mysqli_query($conn, $query);
+	$query = "SELECT *, DATE_FORMAT(dateOfBirth, '%b %d, %Y') bd FROM nf_dog where nfid = ?";
+	$stmt = $conn->prepare($query);
+	$stmt->bind_param('s', $dog_nfid);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$row = mysqli_fetch_array($result);
 }
 
-$row = mysqli_fetch_array($result);
-
-if( $row == null )
-{
-	header( "refresh:0;url=errorPage.php4?errorId=1002");
+if( $row == null ) {
+?> 
+<script type="text/javascript">
+   window.location.href = "errorPage.php4?errorId=1008"
+</script>
+<?php	
 }
+
+print "<br>2";
 
 $akcNumber = $row{'akcNumber'};
 $dog_nfid = $row{'NFID'};
@@ -37,6 +35,8 @@ $sireNfid = 0;
 $damNfid = 0;
 $email = "";
 
+
+include 'header.html';
 
 if ($result) {
 

@@ -1,28 +1,18 @@
-<?php session_start() ?>
+<?php
+include 'initPhp.php';
+include 'getConnection.php';
+$conn= getConnection(); 
+?>
 
 <html>
 <head>
-
 <meta name="description" content="Comprehensive database of AKC field trials since 1999" />
 <meta name="keywords" content="pointing,field trial,database,placement,AKC,birddog,field champion,judges,skip wonnell, kenneth wonnell, laurie wonnell" />
 <meta name="author" content="Skip Wonnell, kenneth wonnell" />
-
-
 </head>
-
 <title>Field Trial Placements Database</title>
 
-<?php
-include 'getConnection.php';
-include 'utils.php';
-
-include 'header.html';
-
-$conn= getConnection(); 
-
-
-?>
-
+<?php include 'header.html'; ?>
 
 <p>
 <p>

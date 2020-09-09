@@ -1,17 +1,14 @@
-<?php session_start() ?>
 
 <html>
 <title>Judge Search</title>
 
 <?php
 
+include 'initPhp.php';
 include 'getConnection.php';
-include 'utils.php';
 include 'header.html';
 
 $conn = getConnection(); 
-//if ( systemIsBusy($conn) == true ) exit();
-
 
 $searchString = "";
 if ( isset($_POST["searchString"]) )
@@ -46,8 +43,6 @@ print "<p>";
 
 include "searchHelp.html";
 
-//$rv = getHits($_SERVER['REQUEST_URI']); 
-//print "<p>(".$rv." hits)";
 
 ?>
 
@@ -70,15 +65,15 @@ include "searchHelp.html";
 
 	print "<table border='0'>";
 
+	$searchString = "%".addslashes($searchString)."%";
 
 	$query = "SELECT firstName, lastName, akcName, nfid FROM nf_judge"; 
+	$query = $query." where concat(firstName,lastName) like ? or akcName like ? order by akcName";
 
-
-	$query = $query." where concat(firstName,lastName) like '%".addslashes($searchString)."%' or akcName like '%".addslashes($searchString)."%' order by akcName";
-
-
-
-	$result = mysqli_query($conn, $query) or DIE($query." failed: ".mysqli_error());
+	$stmt = $conn->prepare($query);
+	$stmt->bind_param('ss', $searchString, $searchString);
+	$stmt->execute();
+	$result = $stmt->get_result();
 
 
 	$maximum = 50;
@@ -115,7 +110,6 @@ include "searchHelp.html";
 	}
 
 ?>
-
 
 </html>
 
