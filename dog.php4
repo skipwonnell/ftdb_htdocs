@@ -22,8 +22,6 @@ if( $row == null ) {
 <?php	
 }
 
-print "<br>2";
-
 $akcNumber = $row{'akcNumber'};
 $dog_nfid = $row{'NFID'};
 

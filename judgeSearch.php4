@@ -1,9 +1,4 @@
-
-<html>
-<title>Judge Search</title>
-
 <?php
-
 include 'initPhp.php';
 include 'getConnection.php';
 include 'header.html';
@@ -16,6 +11,9 @@ if ( isset($_POST["searchString"]) )
 
 
 ?>
+
+<html>
+<title>Judge Search</title>
 
 </body>
 </html>

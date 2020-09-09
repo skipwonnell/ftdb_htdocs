@@ -1,13 +1,12 @@
-
-<html>
-<title>Dog Search</title>
-
 <?php
 include 'initPhp.php';
 include 'getConnection.php';
 $conn= getConnection(); 
 include 'header.html';
 ?>
+
+<html>
+<title>Dog Search</title>
 
 <SCRIPT>
 var postValues = new Array();
