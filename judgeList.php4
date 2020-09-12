@@ -98,7 +98,7 @@ while( $row = mysqli_fetch_array($result) )
 
 		$stakeName = expandStakeName($row{'stake'});
 		print "<a href=showTrialResults.php4?id=".encryptIt($row{'trial_nfid'}).">";
-		print $row{'clubName'}."</a><br>";
+		print "<b>".$row{'clubName'}."</b></a><br>";
 		print $row{'location'}.", ";
 		print $row{'city'}.", ".$row{'state'}."<br>";
 		print $stakeName." ";
