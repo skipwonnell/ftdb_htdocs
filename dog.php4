@@ -73,29 +73,7 @@ print "<head><meta name=\"description\" content=\"AKC Field Trial results for ".
 print "<body>\n";
 print "<title>".$display."</title>\n";
 
-
-
-
-?>
-
-<SCRIPT>
-function postit(akcNumber)
-{
-	var aForm = document.createElement('form');
-	aForm.action = "http://www.akc.org/store/reports/index.cfm"; aForm.method='GET';
-	var aElement = document.createElement("input");
-	aElement.name = 'dog_id'; aElement.type = 'hidden';
-	aElement.value = akcNumber; aForm.appendChild(aElement);
-	document.getElementsByTagName('body')[0].appendChild(aForm);
-	aForm.submit();
-}
-</SCRIPT>
-
-<?php
-
-
 $bw=0;
-
 
 print "&nbsp<br>";
 print "<table border=0 width=100% cellpadding=0>";
@@ -116,7 +94,7 @@ print "<table  cellspacing=2 cellpadding=2 border=0>";
 
 print "<tr><td align=left valign=top>Breed</td><td>  ".$row{'breed'}; 
 print "</td></tr>";
-print "<tr> <td onclick=\"postit('".$row{'akcNumber'}."')\" align=left>AKC Number</td> <td>    ".$row{'akcNumber'}."  </td></tr>";
+print "<tr> <td onclick=window.location='".getAkcPage($akcNumber)."' align=left>AKC Number</td> <td>    ".$row{'akcNumber'}."  </td></tr>";
 print "<tr><td align=left valign=top>Owner(s)</td><td>  ".$row{'owners'}; 
 print "</td></tr>";
 print "<tr><td colspan=2>";
@@ -315,7 +293,10 @@ function getNfid($conn, $akcNumber)
 	if( $row ) return $row{'NFID'};
 	else return 0;
 }
-    
+
+function getAkcPage($akcNumber) {
+	return "https://www.apps.akc.org/apps/store/index.cfm?view=product&cde_category=DOG&cde_product=CMPREC&dog_id=".$akcNumber;
+}    
 ?>
 <?php include 'trailer.html' ?>
 
