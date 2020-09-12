@@ -119,7 +119,7 @@ function listSomeTrials($conn, $searchString, $maximum, $dateFlag)
 
 
 	$stmt = $conn->prepare($query);
-	$stmt->bind_param('s', $searchString); // 's' specifies the variable type => 'string'
+	$stmt->bind_param('s', $searchString); 
 	$stmt->execute();
 	$result = $stmt->get_result();
 	$stmt->close();

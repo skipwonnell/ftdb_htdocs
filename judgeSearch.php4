@@ -2,22 +2,14 @@
 include 'initPhp.php';
 include 'getConnection.php';
 include 'header.html';
-
 $conn = getConnection(); 
-
-$searchString = "";
-if ( isset($_POST["searchString"]) )
-	$searchString = $_POST["searchString"];
-
-
+$judgeSearchString = $_SESSION["judgeSearchString"];
 ?>
 
 <html>
 <title>Judge Search</title>
-
 </body>
 </html>
-
 
 <p>
 <p>
@@ -25,35 +17,20 @@ if ( isset($_POST["searchString"]) )
 <table border=0 cellpadding=20>
 <tr>
 <td rowspan=2 valign='top' width=270> 
-
-<FORM action='judgeSearch.php4' method='post'>
-
+<FORM action='judgeSearchPost.php4' method='post'>
 Judge Name: 
-
-
 <?php
-if ( $searchString == false )
-	print "<INPUT name='searchString' type='text'/>";
-else
-	print "<INPUT name='searchString' type='text' value='".$searchString."'/>";
-
+print "<INPUT name='judgeSearchString' type='text' value='".$judgeSearchString."'/>";
 print "<p>";
-
 include "searchHelp.html";
-
-
 ?>
-
 </FORM>
 </td>
-
 <td > 
-
-
 <?php
 
 
-	if( $searchString != false)
+	if( $judgeSearchString != false)
 	{
 
 	print "<style type='text/css'>";
@@ -63,16 +40,15 @@ include "searchHelp.html";
 
 	print "<table border='0'>";
 
-	$searchString = "%".addslashes($searchString)."%";
+	$judgeSearchString = "%".addslashes($judgeSearchString)."%";
 
 	$query = "SELECT firstName, lastName, akcName, nfid FROM nf_judge"; 
 	$query = $query." where concat(firstName,lastName) like ? or akcName like ? order by akcName";
 
 	$stmt = $conn->prepare($query);
-	$stmt->bind_param('ss', $searchString, $searchString);
+	$stmt->bind_param('ss', $judgeSearchString, $judgeSearchString);
 	$stmt->execute();
 	$result = $stmt->get_result();
-
 
 	$maximum = 50;
 	$i =  0;
