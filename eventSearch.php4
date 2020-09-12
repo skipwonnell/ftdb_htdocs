@@ -17,16 +17,27 @@ $eventSearchString = $_SESSION["eventSearchString"];
 <tr>
 <td rowspan=2 valign='top' width=270> 
 <FORM action='eventSearchPost.php4' method='post'>
-Club Name: 
 
+<table border=0>
+<tr><td>
+Club Name: 
+</td><td>
 <?php
 	if ( $eventSearchString == false )
 		print "<INPUT name='eventSearchString' type='text'/>";
 	else
 		print "<INPUT name='eventSearchString' type='text' value='".$eventSearchString."'/>";
-	print "<p>";
-	include "searchHelp.html";
 ?>
+</td></tr>
+<tr><td>
+</td><td>
+<input type='submit' name='search' value='search'>
+<input type='submit' name='clear' value='clear'>
+</td></tr><td colspan=2>
+&#160<br>
+<?php include "searchHelp.html"; ?>
+</tr></td></tr>
+</table>
 </FORM>
 </td>
 <td > 

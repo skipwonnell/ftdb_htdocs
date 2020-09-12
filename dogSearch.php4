@@ -73,7 +73,7 @@ Breed:&#160 </td><td>
 	print "<br>hp: ".$_SESSION['hasPosted'];
  */
 	if ( $_SESSION['hasPosted'] )
-	listSomeDogs($conn, $_SESSION{'dogSearchString'}, $_SESSION{'ownerSearchString'}, $_SESSION['breed'], 50);
+		listSomeDogs($conn, $_SESSION{'dogSearchString'}, $_SESSION{'ownerSearchString'}, $_SESSION['breed'], 50);
 ?>
 </td></tr></table>
 </body>

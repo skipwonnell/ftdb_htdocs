@@ -90,21 +90,9 @@ include 'updateText.php';
 <font size=2>
 Notes:  This DB has AKC trial data from 1999 to the present.   New results are entered as soon as possible after official posting.   If you find a mistake let me know at <a href="mailto:admin@fieldtrialdatabase.com">admin@fieldtrialdatabase.com</a>.  
 
-<!--
-<?php
-$rv = getHits($conn, $_SERVER['REQUEST_URI']) + 31000;
-print "&#160 ".$rv." Vistors, ".(getTotalHits()+200000)." Hits";
-?>
--->
-
-<?php
-print "&#160 ".(getTotalHits()+6000000)." Hits";
-?>
-
 </td> </tr>
-
 </table>
-
+</table>
 <p>
 
 <?php

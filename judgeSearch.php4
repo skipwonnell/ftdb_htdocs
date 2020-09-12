@@ -2,7 +2,7 @@
 include 'initPhp.php';
 include 'getConnection.php';
 include 'header.html';
-$conn = getConnection(); 
+$conn = getConnection(); if ( systemIsBusy($conn) == true ) exit();
 $judgeSearchString = $_SESSION["judgeSearchString"];
 ?>
 
@@ -10,7 +10,6 @@ $judgeSearchString = $_SESSION["judgeSearchString"];
 <title>Judge Search</title>
 </body>
 </html>
-
 <p>
 <p>
 
@@ -18,26 +17,35 @@ $judgeSearchString = $_SESSION["judgeSearchString"];
 <tr>
 <td rowspan=2 valign='top' width=270> 
 <FORM action='judgeSearchPost.php4' method='post'>
+
+<table border=0>
+<tr><td>
 Judge Name: 
+</td><td>
 <?php
-print "<INPUT name='judgeSearchString' type='text' value='".$judgeSearchString."'/>";
-print "<p>";
-include "searchHelp.html";
+	if ( $judgeSearchString == false )
+		print "<INPUT name='judgeSearchString' type='text'/>";
+	else
+		print "<INPUT name='judgeSearchString' type='text' value='".$judgeSearchString."'/>";
 ?>
+</td></tr>
+<tr><td>
+</td><td>
+<input type='submit' name='search' value='search'>
+<input type='submit' name='clear' value='clear'>
+</td></tr><td colspan=2>
+&#160<br>
+<?php include "searchHelp.html"; ?>
+</tr></td></tr>
+</table>
 </FORM>
 </td>
-<td > 
+
+<td valign="top"> 
+
 <?php
-
-
 	if( $judgeSearchString != false)
 	{
-
-	print "<style type='text/css'>";
-	print "td { padding-left: 4}";
-	print "td { padding-right: 4}";
-	print "</style>";
-
 	print "<table border='0'>";
 
 	$judgeSearchString = "%".addslashes($judgeSearchString)."%";
@@ -82,8 +90,8 @@ include "searchHelp.html";
 	}
 	print "</table>";
 	}
-
 ?>
 
+</td> </tr> </table>
+</body>
 </html>
-
