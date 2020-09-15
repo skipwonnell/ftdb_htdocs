@@ -1,6 +1,10 @@
 <?php
   	session_start();
 
+//	print $_SERVER['REQUEST_URI'];
+//	print_r($_SERVER);
+
+
 	if( !isset($_SESSION['beenHere']) ) {
 		$_SESSION['beenHere'] = "yes";
 		$ciphering = "BF-CBC"; 
@@ -23,6 +27,7 @@
             	$_SESSION['encryption_key'], 0, $_SESSION['encryption_iv']); 
 		return $decryption;
 	}
+
   
 	include 'utils.php';
 ?> 

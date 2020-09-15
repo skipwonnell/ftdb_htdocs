@@ -134,6 +134,8 @@ function listSomeTrials($conn, $searchString, $maximum, $dateFlag)
 		print "</td></tr>";
 		print "</b>";
 
+		print "<form action='showTrialResultsPost.php4' method='post'>";
+
 	$i =  0;
 	while  ( ($row = mysqli_fetch_array($result) )  && $i < $maximum)
 	{ 
@@ -165,11 +167,10 @@ function listSomeTrials($conn, $searchString, $maximum, $dateFlag)
 		print "<td valign='top'>";
 
 		//print "&#160 ".$row{fmtDate}."</td><td>";
-		print " <a href='showTrialResults.php4?id=".encryptIt($trial_nfid).
-			"'>".$cn."</a>";
-
-	//	if( $vcount > 0 )
-	//		print " (".$vcount.")";
+		//
+		
+		print"<button type='submit' class='db-link' name='eventId' value='".encryptIt($trial_nfid)."'>".$cn."</button>";
+	
 		print "</td><td align='left'>";
 		print $city.", ".$state;
 		print "</td><td align='right'>";
@@ -178,7 +179,7 @@ function listSomeTrials($conn, $searchString, $maximum, $dateFlag)
 		print "</td></tr>";
 
 	}
-	print "</table>";
+	print "</form></table>";
 	if ( $origSearchString != false && $i == $maximum )
 	{
 		print "<p>More exist, only displaying ".$maximum."<br>";
@@ -261,6 +262,7 @@ function listSomeDogs($conn, $dogSearchString, $ownerSearchString, $breed, $maxi
 		"DC", "AFC", "TC", "FC", "GCH", "CH", "OTCH", "MACH");
 
 
+	print "<form action='dogPost.php4' method='post'>";
 	if( $dogSearchString != "xxxx" || $ownerSearchString != "")
 	{
 		if( $dogSearchString == "xxxx" )
@@ -282,11 +284,11 @@ function listSomeDogs($conn, $dogSearchString, $ownerSearchString, $breed, $maxi
 		if( empty($oss) )  $oss='%';
 		else $oss = '%'.$oss.'%';
 
-	$stmt = $conn->prepare($query);
-	$stmt->bind_param('ss', $dss, $oss); 
-	$stmt->execute();
-	$result = $stmt->get_result();
-	$stmt->close();
+		$stmt = $conn->prepare($query);
+		$stmt->bind_param('ss', $dss, $oss); 
+		$stmt->execute();
+		$result = $stmt->get_result();
+		$stmt->close();
 
 
 		while  ( ($row = mysqli_fetch_array($result) )  && $i < $maximum)
@@ -306,7 +308,9 @@ function listSomeDogs($conn, $dogSearchString, $ownerSearchString, $breed, $maxi
 			$dog_nfid = $row{'NFID'};
 			print "<tr><td>&#160</td>";
 			print "<td>";
-			print " <a href='dog.php4?id=".encryptIt($dog_nfid)."'>".$registeredName."</a>";
+			print "<button type='submit' class='db-link' name='dogId'".  
+				"value='".encryptIt($dog_nfid)."'>".$registeredName." </button>";
+
 			print " - ".$row{'breed'};
 			print " - ".$row{'owners'};
 			print "</td></tr>";
@@ -319,7 +323,7 @@ function listSomeDogs($conn, $dogSearchString, $ownerSearchString, $breed, $maxi
 
 	}
 
-	print "</table>";
+	print "</form></table>";
 
 	if (  $i == $maximum )
 	{

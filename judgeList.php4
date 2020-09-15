@@ -2,7 +2,7 @@
 include 'initPhp.php';
 include 'getConnection.php';
 
-$judge_id = decryptIt($_GET["id"]);
+$judge_id = decryptIt($_SESSION["judgeId"]);
 $conn=getConnection(); if ( systemIsBusy($conn) == true ) exit();
 $judgeA = getJudge($conn, $judge_id);
 
@@ -61,15 +61,11 @@ if ( strlen($judgeA{'firstName'}) > 2 )
 {
 	$jfn=" for ".$judgeA{'firstName'};
 }
-//print "(".$rv. " hits)</center>";
 print "<a href=\"http://www.akc.org/judges_directory/index.cfm?action=refresh_index_init&judge_id=".$judgeA{'judgesNumber'}."\" target=\"_blank\">AKC Judges page</a><br>";
-//fbs_link("judgeList.php4?id=".$judge_id, "Share this on Facebook");
 print "<br><a href=judgeGeo.php4?id=";
 print encryptIt($judgeA{'NFID'});
 print ">Locations judged</a>";
 print "</center>";
-
-
 
 $lastStakeId = -1;
 
@@ -97,8 +93,13 @@ while( $row = mysqli_fetch_array($result) )
 		$judgeB = getJudge($conn, $judge2_nfid);
 
 		$stakeName = expandStakeName($row{'stake'});
-		print "<a href=showTrialResults.php4?id=".encryptIt($row{'trial_nfid'}).">";
-		print "<b>".$row{'clubName'}."</b></a><br>";
+
+		print "<form style='margin:0px;padding:0px' action='showTrialResultsPost.php4' method='post'>";
+		print "<button type='submit' class='db-link'".
+    		"name='eventId'".
+    		"value='".encryptIt($row{'trial_nfid'})."'>".$row{'clubName'}." </button>";
+		print "</form>";
+
 		print $row{'location'}.", ";
 		print $row{'city'}.", ".$row{'state'}."<br>";
 		print $stakeName." ";
@@ -130,40 +131,54 @@ while( $row = mysqli_fetch_array($result) )
 		 		echo ", $starters $breed";
 			}
 		}
-		echo "<br>";
 
+		print "<form style='margin:0px;padding:0px' action='judgeListPost.php4' method='post'>";
 
 		print "Judges: ";
-		print "<a href=judgeList.php4?id=".encryptIt($judge1_nfid).">";
+		print "<button type='submit' class='db-link'".
+   			"name='judgeId'".
+   			"value='".encryptIt($judge1_nfid)."'>";
 		if ( strlen($judgeA{'firstName'}) > 0 && strlen($judgeA{'lastName'}) > 0 )
 			print $judgeA{'firstName'}." ".$judgeA{'lastName'};
 		else
 			print $judgeA{'akcName'};
-		print "</a> and ";
+		print "</button>";
+		print " and ";
 
-		print "<a href=judgeList.php4?id=".encryptIt($judge2_nfid).">";
+		print "<button type='submit' class='db-link'".
+   			"name='judgeId'".
+   			"value='".encryptIt($judge2_nfid)."'>";
 		if ( strlen($judgeB{'firstName'}) > 0 && strlen($judgeB{'lastName'}) > 0 )
 			print $judgeB{'firstName'}." ".$judgeB{'lastName'};
 		else
 			print $judgeB{'akcName'};
-		print "</a><br> ";
+		print "</button>";
+
+		print "</form>";
 	}
 
+	print "<form style='margin:0px;padding:0px' action='dogPost.php4' method='post'>";
 	print "&nbsp&nbsp&nbsp ".$row{'placement'}.". ";
 
 	if( $row{'nfid'} == 0 ) 
 		print "Withheld<br>";
 	else
 	{
-		print "<a href=dog.php4?id=".encryptIt($row{'nfid'}).">".$row{'registeredName'}."</a> - ";
-		print getBreedAbbr($row{'breed'})."<br>";
+	//	print "<a href=dog.php4?id=".encryptIt($row{'nfid'}).">".$row{'registeredName'}."</a> - ";
+		
+		if( $row{'placement'} == 1 )
+	    	print "<button type='submit' class='db-link-bold'";
+		else
+	    	print "<button type='submit' class='db-link'";
+
+    	print "name='dogId'".
+    	"value='".encryptIt($row{'nfid'})."'>".$row{'registeredName'}." </button>";
+
+		print " &nbsp". getBreedAbbr($row{'breed'})."<br>";
 	}
+	print "</form>";
 
 	if( $row{'placement'} == 4 ) print "</td>";
-
-
-
-
 	
 }
 

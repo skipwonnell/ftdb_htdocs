@@ -4,6 +4,11 @@ include 'getConnection.php';
 include 'header.html';
 $conn = getConnection(); if ( systemIsBusy($conn) == true ) exit();
 $judgeSearchString = $_SESSION["judgeSearchString"];
+
+//if( isset($_GET) ) {  // TODO : why doesn't this work when selected from the header
+	//header("refresh:0;url=errorPage.php4?errorId=2005");
+//}
+
 ?>
 
 <html>
@@ -60,6 +65,7 @@ Judge Name:
 
 	$maximum = 50;
 	$i =  0;
+	print "<form action='judgeListPost.php4' method='post'>";
 	while  ( ($row = mysqli_fetch_array($result) )  && $i < $maximum)
 	{ 
 		$i++; 
@@ -79,7 +85,12 @@ Judge Name:
 			$name = $akcName;
 
 
-		print "<a href=judgeList.php4?id=".encryptIt($nfid).">".$name."</a>";
+		//print "<a href=judgeList.php4?id=".encryptIt($nfid).">".$name."</a>";
+
+		print "<button type='submit' class='db-link'".
+		    "name='judgeId'".
+    		"value='".encryptIt($nfid)."'>".$name." </button>";
+
 
 		print "</td></tr>";
 
@@ -88,7 +99,7 @@ Judge Name:
 	{
 		print "<tr><td>&#160</td><td>No judges found</td></tr>";
 	}
-	print "</table>";
+	print "</form></table>";
 	}
 ?>
 

@@ -2,7 +2,7 @@
 include 'initPhp.php';
 include 'getConnection.php';
 $conn=getConnection(); 
-$dog_nfid = decryptIt($_GET["id"]);
+$dog_nfid = decryptIt($_SESSION["dogId"]);
 
 if( $dog_nfid != null )
 {
@@ -212,24 +212,26 @@ $row3 = mysqli_fetch_array($result3);
     $result5 = mysqli_query($conn, $query5) or DIE("Could not Execute query ");
 	$row5 = mysqli_fetch_array($result5);
 
-
-
-
  	$cn = str_replace("German Shorthaired Pointer", "GSP", $row5{'clubName'});
-  $cn = str_replace("German Wirehaired Pointer", "GWP", $cn);
+	$cn = str_replace("German Wirehaired Pointer", "GWP", $cn);
 
     $startDate = $row5{'startDate'};
 
-    print "<tr><td><a href='showTrialResults.php4?id=".encryptIt($event_nfid)."'>";
-	print $cn."</a></td><td>$startDate</td>";
-    // print "<td><a href=stake.php?id=$stake_nfid>$stake</a></td><td align=center>$placement</td>";
+	print "<tr><td>";
+//	<a href='showTrialResults.php4?id=".encryptIt($event_nfid)."'>"; print $cn."</a>
+	
 
+    print "<form style='margin:0px;padding:0px' action='showTrialResultsPost.php4' method='post'>";
+    print "<button type='submit' class='db-link'".  "name='eventId'".  "value='".encryptIt($event_nfid)."'>".$cn." </button>";
+	print "</form>";
+	
+	print "</td><td>$startDate</td>";
 	$starters = getStarters($conn, $stake_nfid);
 
 	if( $starters == 1 ) $starters = "?";
 
     print "<td align='center'> $stake </td><td align='center'> $placement </td>";
-	 print "<td align='center'>  $starters</td>";
+	print "<td align='center'>  $starters</td>";
 	
 
 	$judgeA=getJudge($conn, $row3[2]);
@@ -244,16 +246,17 @@ $row3 = mysqli_fetch_array($result3);
 		$j2str = $judgeB{'firstName'}." ".$judgeB{'lastName'};
 	else
 		$j2str = $judgeB{'akcName'};
+	
 
+    print "<form style='margin:0px;padding:0px' action='judgeListPost.php4' method='post'>";
 	print "<td align='left'>";
-	print "<a href=judgeList.php4?id=".encryptIt($judgeA{'NFID'}).">".$j1str."</a>";
+    print "<button type='submit' class='db-link'".  "name='judgeId' value='".encryptIt($judgeA{'NFID'})."'>".$j1str." </button>";
 	print "</td><td align='left'>";
-	print "<a href=judgeList.php4?id=".encryptIt($judgeB{'NFID'}).">".$j2str."</a>";
-	print "</td";
+    print "<button type='submit' class='db-link'".  "name='judgeId' value='".encryptIt($judgeB{'NFID'})."'>".$j2str." </button>";
+	print "</td>";
+	print "</form>";
 	
 	print "</tr>";
-
-	
 }
   print "</table>";
 } 
