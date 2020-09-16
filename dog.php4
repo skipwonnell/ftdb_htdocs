@@ -2,7 +2,7 @@
 include 'initPhp.php';
 include 'getConnection.php';
 $conn=getConnection(); 
-$dog_nfid = decryptIt($_SESSION["dogId"]);
+$dog_nfid = decryptIt($_GET["dogId"]);
 
 if( $dog_nfid != null )
 {
@@ -221,7 +221,7 @@ $row3 = mysqli_fetch_array($result3);
 //	<a href='showTrialResults.php4?id=".encryptIt($event_nfid)."'>"; print $cn."</a>
 	
 
-    print "<form style='margin:0px;padding:0px' action='showTrialResultsPost.php4' method='post'>";
+    print "<form style='margin:0px;padding:0px' action='showTrialResultsPost.php4' method='get'>";
     print "<button type='submit' class='db-link'".  "name='eventId'".  "value='".encryptIt($event_nfid)."'>".$cn." </button>";
 	print "</form>";
 	
@@ -248,7 +248,7 @@ $row3 = mysqli_fetch_array($result3);
 		$j2str = $judgeB{'akcName'};
 	
 
-    print "<form style='margin:0px;padding:0px' action='judgeListPost.php4' method='post'>";
+    print "<form style='margin:0px;padding:0px' action='judgeListPost.php4' method='get'>";
 	print "<td align='left'>";
     print "<button type='submit' class='db-link'".  "name='judgeId' value='".encryptIt($judgeA{'NFID'})."'>".$j1str." </button>";
 	print "</td><td align='left'>";

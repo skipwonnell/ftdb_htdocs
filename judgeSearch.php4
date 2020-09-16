@@ -8,7 +8,7 @@ $judgeSearchString = $_SESSION["judgeSearchString"];
 //if( isset($_GET) ) {  // TODO : why doesn't this work when selected from the header
 	//header("refresh:0;url=errorPage.php4?errorId=2005");
 //}
-
+//
 ?>
 
 <html>
@@ -65,7 +65,7 @@ Judge Name:
 
 	$maximum = 50;
 	$i =  0;
-	print "<form action='judgeListPost.php4' method='post'>";
+	print "<form action='judgeListPost.php4' method='get'>";
 	while  ( ($row = mysqli_fetch_array($result) )  && $i < $maximum)
 	{ 
 		$i++; 

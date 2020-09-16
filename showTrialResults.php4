@@ -2,7 +2,7 @@
 include 'initPhp.php';
 include 'getConnection.php';
 $conn = getConnection(); if ( systemIsBusy($conn) == true ) exit();
-$event_nfid= decryptIt($_SESSION["eventId"]);
+$event_nfid= decryptIt($_GET["eventId"]);
 $stmt = $conn->prepare("SELECT eventNumber, clubName, location, city, state, DATE_FORMAT(startDate, '%b %d, %Y') fmtDate FROM nf_trial where nfid= ?");
 $stmt->bind_param('s', $event_nfid);
 $stmt->execute();
@@ -71,7 +71,7 @@ print "<td>";
 	$judgeB = getJudge($conn, $judge2_nfid);
 
 
-    print "<form style='margin:0px;padding:0px' action='judgeListPost.php4' method='post'>";
+    print "<form style='margin:0px;padding:0px' action='judgeListPost.php4' method='get'>";
 
 	// print "<a href=judgeList.php4?id=".encryptIt($judge1_nfid).">";
 	//
@@ -128,7 +128,7 @@ print "<td>";
 	$query = "SELECT * FROM nf_placement where stake_nfid = '$stake_nfid' order by placement";
 	$result = mysqli_query($conn, $query) or DIE("Could not Execute Query ");
 
-	print "<form action='dogPost.php4' method='post'>";
+	print "<form action='dogPost.php4' method='get'>";
 
 	while ($row = mysqli_fetch_array($result) )
 	{

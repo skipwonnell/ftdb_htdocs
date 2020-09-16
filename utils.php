@@ -134,7 +134,7 @@ function listSomeTrials($conn, $searchString, $maximum, $dateFlag)
 		print "</td></tr>";
 		print "</b>";
 
-		print "<form action='showTrialResultsPost.php4' method='post'>";
+		print "<form action='showTrialResultsPost.php4' method='get'>";
 
 	$i =  0;
 	while  ( ($row = mysqli_fetch_array($result) )  && $i < $maximum)
@@ -262,7 +262,7 @@ function listSomeDogs($conn, $dogSearchString, $ownerSearchString, $breed, $maxi
 		"DC", "AFC", "TC", "FC", "GCH", "CH", "OTCH", "MACH");
 
 
-	print "<form action='dogPost.php4' method='post'>";
+	print "<form action='dogPost.php4' method='get'>";
 	if( $dogSearchString != "xxxx" || $ownerSearchString != "")
 	{
 		if( $dogSearchString == "xxxx" )

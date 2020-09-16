@@ -2,7 +2,7 @@
 include 'initPhp.php';
 include 'getConnection.php';
 
-$judge_id = decryptIt($_SESSION["judgeId"]);
+$judge_id = decryptIt($_GET["judgeId"]);
 $conn=getConnection(); if ( systemIsBusy($conn) == true ) exit();
 $judgeA = getJudge($conn, $judge_id);
 
@@ -15,18 +15,14 @@ if( $judgeA == null ) {
 }
 include 'header.html';
 ?>
-
 <html>
 <head>
 <meta name="description" content="Judging assignments for <?php print $judgeA{'akcName'}; ?> "/>
 </head>
-
 <title>
 <?php print $judgeA{'akcName'} ?> Judging Assignments
 </title>
-
 <?php
-
 
 $query = "select  nf_trial.clubName, nf_trial.city, nf_trial.state, nf_trial.location,
 DATE_FORMAT(nf_trial.startDate,'%b %d, %Y') fmtDate, nf_trial.nfid trial_nfid, nf_stake.judge1_nfid,
@@ -76,7 +72,6 @@ print "<table cellpadding=15 align=center>";
 while( $row = mysqli_fetch_array($result) )
 {
 
-
     $stake_nfid = $row{'stake_nfid'};
 	if( $lastStakeId != $stake_nfid )
 	{
@@ -94,7 +89,7 @@ while( $row = mysqli_fetch_array($result) )
 
 		$stakeName = expandStakeName($row{'stake'});
 
-		print "<form style='margin:0px;padding:0px' action='showTrialResultsPost.php4' method='post'>";
+		print "<form style='margin:0px;padding:0px' action='showTrialResultsPost.php4' method='get'>";
 		print "<button type='submit' class='db-link'".
     		"name='eventId'".
     		"value='".encryptIt($row{'trial_nfid'})."'>".$row{'clubName'}." </button>";
@@ -132,7 +127,7 @@ while( $row = mysqli_fetch_array($result) )
 			}
 		}
 
-		print "<form style='margin:0px;padding:0px' action='judgeListPost.php4' method='post'>";
+		print "<form style='margin:0px;padding:0px' action='judgeListPost.php4' method='get'>";
 
 		print "Judges: ";
 		print "<button type='submit' class='db-link'".
@@ -157,7 +152,7 @@ while( $row = mysqli_fetch_array($result) )
 		print "</form>";
 	}
 
-	print "<form style='margin:0px;padding:0px' action='dogPost.php4' method='post'>";
+	print "<form style='margin:0px;padding:0px' action='dogPost.php4' method='get'>";
 	print "&nbsp&nbsp&nbsp ".$row{'placement'}.". ";
 
 	if( $row{'nfid'} == 0 ) 
