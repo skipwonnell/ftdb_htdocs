@@ -24,7 +24,6 @@ $destinationWindow = $row{'destinationWindow'};
 
 if( strcmp($destinationWindow, "dog") == 0 ) {
 	$link = "dog.php4?dogId=".encryptIt($nfid);
-	echo $link;
 	header("Location: $link ");
 }
 ?>

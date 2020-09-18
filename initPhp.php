@@ -1,9 +1,6 @@
 <?php
   	session_start();
 
-//	print $_SERVER['REQUEST_URI'];
-//	print_r($_SERVER);
-
 
 	if( !isset($_SESSION['beenHere']) ) {
 		$_SESSION['beenHere'] = "yes";
@@ -30,5 +27,4 @@
 
   
 	include 'utils.php';
-?> 
-
+?>
