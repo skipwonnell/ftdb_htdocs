@@ -173,24 +173,18 @@ print "</table>";
 print "</table>";
 
 
-
-
-
-
-
-
 $query2 = "SELECT nf_placement.* FROM nf_placement,nf_stake,nf_trial where nf_placement.dog_nfid = $dog_nfid and nf_stake.nfid = nf_placement.stake_nfid and nf_trial.nfid = nf_stake.event_nfid order by nf_trial.startDate desc";
 $result2 = mysqli_query($conn, $query2) or DIE("Could not Execute Query ");
 
 
 print "<p><center><b> ".mysqli_num_rows($result2)." PLACEMENTS </b><p>";
 
-print "<center><table border=1 cellpadding=2>";
+print "<center><table border=0 cellpadding=2>";
 
 echo "<tr><td align='center'><b>";
 echo "Club</td><td align='center'><b>Date</td><td align='center'><b>Stake</td><td align='center'><b>Place</td>";
 echo "<td align='center'><b>Starters</b></td>";
-echo "<td align='center' colspan='2'><b>Judges</b></td>";
+echo "<td halign='left' colspan='2'><b>Judges</b></td>";
 echo "</tr></b>";
 
 while ($row2 = mysqli_fetch_array($result2))

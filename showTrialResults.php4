@@ -47,13 +47,14 @@ $result2 = $stmt->get_result();
 
 $i = 0;
 
-print "<table cellpadding=15 align=center>";
+print "<table border=0 cellpadding=5 align=center>";
 while ($row2 = mysqli_fetch_array($result2))
 {
 
-if ( $i % 2 == 0 )
-	print "<tr>";
-print "<td>";
+	if ( $i % 2 == 0 )
+		print "<tr>";
+
+	print "<td>";
 
 	$judge1_nfid = $row2{'judge1_nfid'};
 	$judge2_nfid = $row2{'judge2_nfid'};

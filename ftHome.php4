@@ -20,40 +20,9 @@ $conn= getConnection();
 <table border=0 cellpadding=1>
 <tr>
 <td align=center rowspan=3 >
-
-<!--
-<img border=5 src='jaks.jpg' width=270
-class=pointer onclick=window.location.assign("http://www.remekvizslas.net/dog.php4?id=5757") ><br>
-<a href='http://www.remekvizslas.net/dog.php4?id=5757'>Jaks</a>
--->
-
-<!--
-<img border=5 src='harry2.jpg' width=330
-class=pointer onclick=window.location.assign("http://www.remekvizslas.net/dog.php4?id=24786") ><br>
-<a href='http://www.remekvizslas.net/dog.php4?id=24786'><I>CH</I> Remek's Dark Side of the Moon</a>
--->
-
-
-<!--
-<img border=5 src='xmas2009.jpg' width=350> 
-<img border=5 src='jaks.jpg' width=275 
-class=pointer onclick=window.location.assign("http://www.remekvizslas.net/dog.php4?id=5757") >
-<a href='http://www.remekvizslas.net/dog.php4?id=5757'>Jaks</a>
-<img border=5 src='RemyBird.jpg' width=300><br>
--->
-
-<img border=5 src='images/RemyBird.jpg' width=320><br>
-<!--
-"Remy" 1997-2010 <br>
-Rest in peace my friend
--->
-
-
-
-<?php 
-// $rv = getTotalHits();
-// print " (".$rv.")";
-?>
+<img border=5 src='images/jaks.jpg' width=270
+class=pointer onclick=window.location.assign('direct.php?name=Jaks') ><br>
+<a href='direct.php?name=Jaks'>Jaks</a>
 
 </td>
 
@@ -63,7 +32,6 @@ Rest in peace my friend
 <tr><td >
 <?php
 include 'updateText.php';
-//fbs_link("ftHome.php4", "Share this on Facebook");
 ?>
 </tr></td>
 </table>
