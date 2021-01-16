@@ -262,6 +262,9 @@ function listSomeDogs($conn, $dogSearchString, $ownerSearchString, $breed, $maxi
 		"DC", "AFC", "TC", "FC", "GCH", "CH", "OTCH", "MACH");
 
 
+	$dogSearchString=trim($dogSearchString);
+	$ownerSearchString=trim($ownerSearchString);
+
 	print "<form action='dogPost.php4' method='get'>";
 	if( $dogSearchString != "xxxx" || $ownerSearchString != "")
 	{
