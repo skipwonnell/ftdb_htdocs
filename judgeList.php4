@@ -17,10 +17,10 @@ include 'header.html';
 ?>
 <html>
 <head>
-<meta name="description" content="Judging assignments for <?php print $judgeA{'akcName'}; ?> "/>
+<meta name="description" content="Judging assignments for <?php print $judgeA['akcName']; ?> "/>
 </head>
 <title>
-<?php print $judgeA{'akcName'} ?> Judging Assignments
+<?php print $judgeA['akcName'] ?> Judging Assignments
 </title>
 <?php
 
@@ -39,27 +39,27 @@ $nStakes = mysqli_num_rows($result)/4;
 $query2 = "select sum(starters) as startersSum from nf_starters, nf_stake where ( judge1_nfid = $judge_id or judge2_nfid = $judge_id) and nfid = stake_nfid ";
 $result2 = mysqli_query($conn, $query2); 
 $row2 = mysqli_fetch_array($result2);
-$startersSum = $row2{'startersSum'};
+$startersSum = $row2['startersSum'];
  
 
 //$rv = getHits($_SERVER['REQUEST_URI']); 
 print "<center><h3>";
-if ( strlen($judgeA{'firstName'}) > 0 && strlen($judgeA{'lastName'}) > 0 )
-	//print $nStakes." Stakes ".$startersSum." starters judged by ".$judgeA{'firstName'}." ".$judgeA{'lastName'}."</h3></b>";
-	print $nStakes." Stakes judged by ".$judgeA{'firstName'}." ".$judgeA{'lastName'}."</h3></b>";
+if ( strlen($judgeA['firstName']) > 0 && strlen($judgeA['lastName']) > 0 )
+	//print $nStakes." Stakes ".$startersSum." starters judged by ".$judgeA['firstName']." ".$judgeA['lastName']."</h3></b>";
+	print $nStakes." Stakes judged by ".$judgeA['firstName']." ".$judgeA['lastName']."</h3></b>";
 else
-	print $nStakes." Stakes judged by ".$judgeA{'akcName'}."</h3></b>";
+	print $nStakes." Stakes judged by ".$judgeA['akcName']."</h3></b>";
 
 
 
 $jfn="";
-if ( strlen($judgeA{'firstName'}) > 2 )
+if ( strlen($judgeA['firstName']) > 2 )
 {
-	$jfn=" for ".$judgeA{'firstName'};
+	$jfn=" for ".$judgeA['firstName'];
 }
-print "<a href=\"http://www.akc.org/judges_directory/index.cfm?action=refresh_index_init&judge_id=".$judgeA{'judgesNumber'}."\" target=\"_blank\">AKC Judges page</a><br>";
+print "<a href=\"http://www.akc.org/judges_directory/index.cfm?action=refresh_index_init&judge_id=".$judgeA['judgesNumber']."\" target=\"_blank\">AKC Judges page</a><br>";
 print "<br><a href=judgeGeo.php4?id=";
-print encryptIt($judgeA{'NFID'});
+print encryptIt($judgeA['NFID']);
 print ">Locations judged</a>";
 print "</center>";
 
@@ -72,7 +72,7 @@ print "<table cellpadding=15 align=center>";
 while( $row = mysqli_fetch_array($result) )
 {
 
-    $stake_nfid = $row{'stake_nfid'};
+    $stake_nfid = $row['stake_nfid'];
 	if( $lastStakeId != $stake_nfid )
 	{
 		if( $i %2 == 0 )
@@ -82,25 +82,25 @@ while( $row = mysqli_fetch_array($result) )
 		print "<td>";
 
 		$lastStakeId = $stake_nfid ;
-		$judge1_nfid = $row{'judge1_nfid'};
-		$judge2_nfid = $row{'judge2_nfid'};
+		$judge1_nfid = $row['judge1_nfid'];
+		$judge2_nfid = $row['judge2_nfid'];
 		$judgeA = getJudge($conn, $judge1_nfid);
 		$judgeB = getJudge($conn, $judge2_nfid);
 
-		$stakeName = expandStakeName($row{'stake'});
+		$stakeName = expandStakeName($row['stake']);
 
 		print "<form style='margin:0px;padding:0px' action='showTrialResultsPost.php4' method='get'>";
 		print "<button type='submit' class='db-link'".
     		"name='eventId'".
-    		"value='".encryptIt($row{'trial_nfid'})."'>".$row{'clubName'}." </button>";
+    		"value='".encryptIt($row['trial_nfid'])."'>".$row['clubName']." </button>";
 		print "</form>";
 
-		print $row{'location'}.", ";
-		print $row{'city'}.", ".$row{'state'}."<br>";
+		print $row['location'].", ";
+		print $row['city'].", ".$row['state']."<br>";
 		print $stakeName." ";
-		if ( $row{'retInd'} == 1 ) print "- Retrieving ";
+		if ( $row['retInd'] == 1 ) print "- Retrieving ";
 
-		print " &nbsp &nbsp &nbsp ".$row{'fmtDate'}."<br>";
+		print " &nbsp &nbsp &nbsp ".$row['fmtDate']."<br>";
 	
 		print getStarters($conn, $stake_nfid)." Starters ";
 
@@ -112,8 +112,8 @@ while( $row = mysqli_fetch_array($result) )
 
 		
 
-		$breed = $row3{'breed'};
-		$starters = $row3{'starters'};
+		$breed = $row3['breed'];
+		$starters = $row3['starters'];
 
 		if( strncmp($breed, "noBreeds", 8) != 0 )
 		{
@@ -121,8 +121,8 @@ while( $row = mysqli_fetch_array($result) )
 
 			while ($row3 = mysqli_fetch_array($result3) )
 			{
-		 		$breed = $row3{'breed'};
-		 		$starters = $row3{'starters'};
+		 		$breed = $row3['breed'];
+		 		$starters = $row3['starters'];
 		 		echo ", $starters $breed";
 			}
 		}
@@ -133,47 +133,47 @@ while( $row = mysqli_fetch_array($result) )
 		print "<button type='submit' class='db-link'".
    			"name='judgeId'".
    			"value='".encryptIt($judge1_nfid)."'>";
-		if ( strlen($judgeA{'firstName'}) > 0 && strlen($judgeA{'lastName'}) > 0 )
-			print $judgeA{'firstName'}." ".$judgeA{'lastName'};
+		if ( strlen($judgeA['firstName']) > 0 && strlen($judgeA['lastName']) > 0 )
+			print $judgeA['firstName']." ".$judgeA['lastName'];
 		else
-			print $judgeA{'akcName'};
+			print $judgeA['akcName'];
 		print "</button>";
 		print " and ";
 
 		print "<button type='submit' class='db-link'".
    			"name='judgeId'".
    			"value='".encryptIt($judge2_nfid)."'>";
-		if ( strlen($judgeB{'firstName'}) > 0 && strlen($judgeB{'lastName'}) > 0 )
-			print $judgeB{'firstName'}." ".$judgeB{'lastName'};
+		if ( strlen($judgeB['firstName']) > 0 && strlen($judgeB['lastName']) > 0 )
+			print $judgeB['firstName']." ".$judgeB['lastName'];
 		else
-			print $judgeB{'akcName'};
+			print $judgeB['akcName'];
 		print "</button>";
 
 		print "</form>";
 	}
 
 	print "<form style='margin:0px;padding:0px' action='dogPost.php4' method='get'>";
-	print "&nbsp&nbsp&nbsp ".$row{'placement'}.". ";
+	print "&nbsp&nbsp&nbsp ".$row['placement'].". ";
 
-	if( $row{'nfid'} == 0 ) 
+	if( $row['nfid'] == 0 ) 
 		print "Withheld<br>";
 	else
 	{
-	//	print "<a href=dog.php4?id=".encryptIt($row{'nfid'}).">".$row{'registeredName'}."</a> - ";
+	//	print "<a href=dog.php4?id=".encryptIt($row['nfid']).">".$row['registeredName']."</a> - ";
 		
-		if( $row{'placement'} == 1 )
+		if( $row['placement'] == 1 )
 	    	print "<button type='submit' class='db-link-bold'";
 		else
 	    	print "<button type='submit' class='db-link'";
 
     	print "name='dogId'".
-    	"value='".encryptIt($row{'nfid'})."'>".$row{'registeredName'}." </button>";
+    	"value='".encryptIt($row['nfid'])."'>".$row['registeredName']." </button>";
 
-		print " &nbsp". getBreedAbbr($row{'breed'})."<br>";
+		print " &nbsp". getBreedAbbr($row['breed'])."<br>";
 	}
 	print "</form>";
 
-	if( $row{'placement'} == 4 ) print "</td>";
+	if( $row['placement'] == 4 ) print "</td>";
 	
 }
 

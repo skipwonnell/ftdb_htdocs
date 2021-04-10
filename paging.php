@@ -20,8 +20,8 @@
 	$pageCount = intval($recordCount/$recordLimit) + 1;
 
 	$page=1;
-    if( isset($_GET{'page'} ) ) {
-    	$page = $_GET{'page'};
+    if( isset($_GET['page'] ) ) {
+    	$page = $_GET['page'];
     }
 	if( $page < 1 || $page > $pageCount ) {
 		header("Location: ".$location."?page=1", true, 303);
@@ -76,12 +76,12 @@
 	$last=1;
 	if( $pageIdx > 0 ) {
 		$last=$pageIdx ;
-		echo "<a href = \"${location}?page=$last\">Previous $recordLimit Records</a> ";
+		echo "<a href = \"$[location]?page=$last\">Previous $recordLimit Records</a> ";
 	} 
 	if( $recordsLeft > $recordLimit ) {
-		echo "<a href = \"${location}?page=$nextPage\">Next $recordLimit Records</a> ";
+		echo "<a href = \"$[location]?page=$nextPage\">Next $recordLimit Records</a> ";
 	} else if ($recordsLeft > 0 ) {
-		echo "<a href = \"${location}?page=$nextPage\">Next $recordsLeft Records</a> ";
+		echo "<a href = \"$[location]?page=$nextPage\">Next $recordsLeft Records</a> ";
 	}
 	 */
 	mysqli_close($conn);

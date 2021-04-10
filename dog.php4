@@ -22,8 +22,8 @@ if( $row == null ) {
 <?php	
 }
 
-$akcNumber = $row{'akcNumber'};
-$dog_nfid = $row{'NFID'};
+$akcNumber = $row['akcNumber'];
+$dog_nfid = $row['NFID'];
 
 $hasOwnerInfo = 0;
 $callName = "";
@@ -46,27 +46,27 @@ if ($result) {
 	if( $result7  && $row7 = mysqli_fetch_array($result7))
 	{
 		$hasOwnerInfo = 1;
-		$callName = trim($row7{'callName'});
-		$url = trim($row7{'url'});
-		$akcTitles = trim($row7{'akcTitles'});
-		$otherTitles = trim($row7{'otherTitles'});
-		$backTitles = trim($row7{'backTitles'});
+		$callName = trim($row7['callName']);
+		$url = trim($row7['url']);
+		$akcTitles = trim($row7['akcTitles']);
+		$otherTitles = trim($row7['otherTitles']);
+		$backTitles = trim($row7['backTitles']);
 		if ( strncmp($akcTitles, "none", 4) == 0 )
 			$akcTitles = "";
-		$email = $row7{'email'};
-		$sireAkcNumber = $row7{'sireAkcNumber'};
-		$damAkcNumber = $row7{'damAkcNumber'};
+		$email = $row7['email'];
+		$sireAkcNumber = $row7['sireAkcNumber'];
+		$damAkcNumber = $row7['damAkcNumber'];
 		$sireName = trim(getNameWithTitles($conn, $sireAkcNumber));
 		$sireNfid = getNfid($conn, $sireAkcNumber);
 		$damName = trim(getNameWithTitles($conn, $damAkcNumber));
 		$damNfid = getNfid($conn, $damAkcNumber);
 	}
 
-$nameHttp=getNameHttp($row7,$row{'registeredName'});
+$nameHttp=getNameHttp($row7,$row['registeredName']);
 
 $display=getTitleDisplay($akcTitles, $otherTitles);
 if(strlen($display)>0) $display=$display." ";
-$display=$display.$row{'registeredName'}." ".$backTitles;
+$display=$display.$row['registeredName']." ".$backTitles;
 
 print "<html>\n";
 print "<head><meta name=\"description\" content=\"AKC Field Trial results for ".$display."\"/></head>\n";
@@ -92,14 +92,14 @@ print "<tr><td align=center>";
 print "<table  cellspacing=2 cellpadding=2 border=0>";
 
 
-print "<tr><td align=left valign=top>Breed</td><td>  ".$row{'breed'}; 
+print "<tr><td align=left valign=top>Breed</td><td>  ".$row['breed']; 
 print "</td></tr>";
-print "<tr> <td onclick=window.location='".getAkcPage($akcNumber)."' align=left>AKC Number</td> <td>    ".$row{'akcNumber'}."  </td></tr>";
-print "<tr><td align=left valign=top>Owner(s)</td><td>  ".$row{'owners'}; 
+print "<tr> <td onclick=window.location='".getAkcPage($akcNumber)."' align=left>AKC Number</td> <td>    ".$row['akcNumber']."  </td></tr>";
+print "<tr><td align=left valign=top>Owner(s)</td><td>  ".$row['owners']; 
 print "</td></tr>";
 print "<tr><td colspan=2>";
-$breed=$row{'breed'};
-$akcNumber = $row{'akcNumber'};
+$breed=$row['breed'];
+$akcNumber = $row['akcNumber'];
 print "</table>";
 print "</td>";
 
@@ -112,7 +112,7 @@ print "<tr><td align=center colspan=2>";
 
 //print "<tr><td align=center>";
 
-$rn = urlencode($row{'registeredName'});
+$rn = urlencode($row['registeredName']);
 
 //print "</td></tr> ";
 //print "</table>";
@@ -189,8 +189,8 @@ echo "</tr></b>";
 
 while ($row2 = mysqli_fetch_array($result2))
 {
-    $stake_nfid = $row2{'stake_nfid'};
-    $placement = $row2{'placement'};
+    $stake_nfid = $row2['stake_nfid'];
+    $placement = $row2['placement'];
 
 
     $query3 = "SELECT nf_stake.*, nf_trial.startDate FROM nf_stake,nf_trial where nf_stake.nfid = $stake_nfid and nf_trial.nfid = nf_stake.event_nfid order by nf_trial.startDate desc";
@@ -206,10 +206,10 @@ $row3 = mysqli_fetch_array($result3);
     $result5 = mysqli_query($conn, $query5) or DIE("Could not Execute query ");
 	$row5 = mysqli_fetch_array($result5);
 
- 	$cn = str_replace("German Shorthaired Pointer", "GSP", $row5{'clubName'});
+ 	$cn = str_replace("German Shorthaired Pointer", "GSP", $row5['clubName']);
 	$cn = str_replace("German Wirehaired Pointer", "GWP", $cn);
 
-    $startDate = $row5{'startDate'};
+    $startDate = $row5['startDate'];
 
 	print "<tr><td>";
 //	<a href='showTrialResults.php4?id=".encryptIt($event_nfid)."'>"; print $cn."</a>
@@ -231,22 +231,22 @@ $row3 = mysqli_fetch_array($result3);
 	$judgeA=getJudge($conn, $row3[2]);
 	$judgeB=getJudge($conn, $row3[3]);
 
- 	if ( strlen($judgeA{'firstName'}) > 0 && strlen($judgeA{'lastName'}) > 0 )
-		$j1str = $judgeA{'firstName'}." ".$judgeA{'lastName'};
+ 	if ( strlen($judgeA['firstName']) > 0 && strlen($judgeA['lastName']) > 0 )
+		$j1str = $judgeA['firstName']." ".$judgeA['lastName'];
 	else
-		$j1str = $judgeA{'akcName'};
+		$j1str = $judgeA['akcName'];
 
- 	if ( strlen($judgeB{'firstName'}) > 0 && strlen($judgeB{'lastName'}) > 0 )
-		$j2str = $judgeB{'firstName'}." ".$judgeB{'lastName'};
+ 	if ( strlen($judgeB['firstName']) > 0 && strlen($judgeB['lastName']) > 0 )
+		$j2str = $judgeB['firstName']." ".$judgeB['lastName'];
 	else
-		$j2str = $judgeB{'akcName'};
+		$j2str = $judgeB['akcName'];
 	
 
     print "<form style='margin:0px;padding:0px' action='judgeListPost.php4' method='get'>";
 	print "<td align='left'>";
-    print "<button type='submit' class='db-link'".  "name='judgeId' value='".encryptIt($judgeA{'NFID'})."'>".$j1str." </button>";
+    print "<button type='submit' class='db-link'".  "name='judgeId' value='".encryptIt($judgeA['NFID'])."'>".$j1str." </button>";
 	print "</td><td align='left'>";
-    print "<button type='submit' class='db-link'".  "name='judgeId' value='".encryptIt($judgeB{'NFID'})."'>".$j2str." </button>";
+    print "<button type='submit' class='db-link'".  "name='judgeId' value='".encryptIt($judgeB['NFID'])."'>".$j2str." </button>";
 	print "</td>";
 	print "</form>";
 	
@@ -273,8 +273,8 @@ function getNameWithTitles($conn, $akcNumber)
 	$row = mysqli_fetch_array($result);
 
 	$registeredName = "";
-	if( $row ) $registeredName = trim($row{'registeredName'});
-	else if( $row1 ) $registeredName = trim($row1{'registeredName'});
+	if( $row ) $registeredName = trim($row['registeredName']);
+	else if( $row1 ) $registeredName = trim($row1['registeredName']);
 
 	return getNameHttp($row1, $registeredName);
 
@@ -287,7 +287,7 @@ function getNfid($conn, $akcNumber)
 	//$result = mysqli_query($conn, $query) or DIE("Could not Execute query ".$query);
 	$row = mysqli_fetch_array($result);
 
-	if( $row ) return $row{'NFID'};
+	if( $row ) return $row['NFID'];
 	else return 0;
 }
 

@@ -13,12 +13,12 @@ include 'header.html';
 
 <html>
 <head>
-<meta name="description" content="Judging Locations for <?php print $judgeA{'akcName'}; ?> "/>
+<meta name="description" content="Judging Locations for <?php print $judgeA['akcName']; ?> "/>
 
 </head>
 
 <title>
-<?php print $judgeA{'akcName'} ?> Judging Locations
+<?php print $judgeA['akcName'] ?> Judging Locations
 </title>
 
 
@@ -29,7 +29,7 @@ include 'header.html';
 
 $query = "select city,state,count(*) from nf_trial where ".
 "nfid in (select distinct event_nfid from nf_stake where ".
-"judge1_nfid = ".$judgeA{'NFID'}." or judge2_nfid = ".$judgeA{'NFID'}.")".
+"judge1_nfid = ".$judgeA['NFID']." or judge2_nfid = ".$judgeA['NFID'].")".
 " group by city,state order by count(*) desc, city";
 
 
@@ -38,10 +38,10 @@ $nLocs = mysqli_num_rows($result);
 
 //$rv = getHits($_SERVER['REQUEST_URI']); 
 print "<center><h3>";
-if ( strlen($judgeA{'firstName'}) > 0 && strlen($judgeA{'lastName'}) > 0 )
-	print "Locations for ".$judgeA{'firstName'}." ".$judgeA{'lastName'}."</h3></b>";
+if ( strlen($judgeA['firstName']) > 0 && strlen($judgeA['lastName']) > 0 )
+	print "Locations for ".$judgeA['firstName']." ".$judgeA['lastName']."</h3></b>";
 else
-	print "Locations for ".$judgeA{'akcName'}."</h3></b>";
+	print "Locations for ".$judgeA['akcName']."</h3></b>";
 
 
 
@@ -57,8 +57,8 @@ while( $row = mysqli_fetch_array($result) )
 
 
 print "<tr>";
-print "<td align=center>".$row{'count(*)'}."</td>";
-print "<td>&nbsp&nbsp".$row{'city'}.", ".$row{'state'}."</td>";
+print "<td align=center>".$row['count(*)']."</td>";
+print "<td>&nbsp&nbsp".$row['city'].", ".$row['state']."</td>";
 print "</tr>";
 	
 }
@@ -67,7 +67,7 @@ print "</table>";
 print "<p>";
 
 print "<a href=judgeList.php4?id="; 
-print encryptIt($judgeA{'NFID'});
+print encryptIt($judgeA['NFID']);
 print ">back to stakes</a>";
 
 print "</html>";

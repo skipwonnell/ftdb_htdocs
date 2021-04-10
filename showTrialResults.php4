@@ -19,19 +19,19 @@ include 'header.html';
 
 print "<html>";
 print "<head>";
-print "<meta name=\"description\" content=\"Results from the trial on ".$row{'fmtDate'}." held at ".$row{'location'}.", ".$row{'city'}.", ".$row{'state'}.".\"/>";
+print "<meta name=\"description\" content=\"Results from the trial on ".$row['fmtDate']." held at ".$row['location'].", ".$row['city'].", ".$row['state'].".\"/>";
 print "</head>";
 print "<body>";
 
-$eventNumber=$row{'eventNumber'};
+$eventNumber=$row['eventNumber'];
 
-print "<title>".$row{'clubName'}."</title>";
+print "<title>".$row['clubName']."</title>";
 print "<p>";
 print "<center>";
-print "<h2>".$row{'clubName'}."</h2>";
-print $row{'location'}."<br>";
-print $row{'city'}.", ".$row{'state'}."<br>";
-print $row{'fmtDate'}."<br>";
+print "<h2>".$row['clubName']."</h2>";
+print $row['location']."<br>";
+print $row['city'].", ".$row['state']."<br>";
+print $row['fmtDate']."<br>";
 $link="http://www.akc.org/events/search/index_results.cfm?action=plan&event_number=".$eventNumber."&cde_comp_group=FT  &cde_comp_type=&NEW_END_DATE1=&key_stkhldr_event=&mixed_breed=N";
 print "<a href=\"".$link."\" target=\"_blank\">AKC Results Page</a>";
 print "<br>";
@@ -56,13 +56,13 @@ while ($row2 = mysqli_fetch_array($result2))
 
 	print "<td>";
 
-	$judge1_nfid = $row2{'judge1_nfid'};
-	$judge2_nfid = $row2{'judge2_nfid'};
-    $stake_nfid = $row2{'nfid'};
-	$stakeName = expandStakeName($row2{'stake'});
+	$judge1_nfid = $row2['judge1_nfid'];
+	$judge2_nfid = $row2['judge2_nfid'];
+    $stake_nfid = $row2['nfid'];
+	$stakeName = expandStakeName($row2['stake']);
 	print "<b>".$stakeName."</b>";
 
-	$retInd=$row2{'retInd'};
+	$retInd=$row2['retInd'];
 	if ( $retInd == 1 )
 		echo " (Retrieving)";
 	echo "<br>";
@@ -78,10 +78,10 @@ while ($row2 = mysqli_fetch_array($result2))
 	//
 	//
 	
-	if ( strlen($judgeA{'firstName'}) > 0 && strlen($judgeA{'lastName'}) > 0 )
-		$j1str = $judgeA{'firstName'}." ".$judgeA{'lastName'};
+	if ( strlen($judgeA['firstName']) > 0 && strlen($judgeA['lastName']) > 0 )
+		$j1str = $judgeA['firstName']." ".$judgeA['lastName'];
 	else
-		$j1str = $judgeA{'akcName'};
+		$j1str = $judgeA['akcName'];
 
     print "<button type='submit' class='db-link'".
 	    "name='judgeId'".
@@ -90,10 +90,10 @@ while ($row2 = mysqli_fetch_array($result2))
 	print " and ";
 
 	
-	if ( strlen($judgeB{'firstName'}) > 0 && strlen($judgeB{'lastName'}) > 0 )
-		$j2str = $judgeB{'firstName'}." ".$judgeB{'lastName'};
+	if ( strlen($judgeB['firstName']) > 0 && strlen($judgeB['lastName']) > 0 )
+		$j2str = $judgeB['firstName']." ".$judgeB['lastName'];
 	else
-		$j2str = $judgeB{'akcName'};
+		$j2str = $judgeB['akcName'];
 
     print "<button type='submit' class='db-link'".
 	    "name='judgeId'".
@@ -108,17 +108,17 @@ while ($row2 = mysqli_fetch_array($result2))
 	$result = mysqli_query($conn, $query) or DIE("Could not Execute Query ");
 
 	$row = mysqli_fetch_array($result);
-	$breed = $row{'breed'};
+	$breed = $row['breed'];
 
 	if( strncmp($breed, "noBreeds", 8) != 0 )
 	{
-		$starters = $row{'starters'};
+		$starters = $row['starters'];
 		echo "  ($starters   $breed";
 
 		while ($row = mysqli_fetch_array($result) )
 		{
-		 	$breed = $row{'breed'};
-		 	$starters = $row{'starters'};
+		 	$breed = $row['breed'];
+		 	$starters = $row['starters'];
 		 	echo ", $starters $breed";
 		}
 		echo ")";
@@ -133,16 +133,16 @@ while ($row2 = mysqli_fetch_array($result2))
 
 	while ($row = mysqli_fetch_array($result) )
 	{
-		 $placement= $row{'placement'};
-		 $dog_nfid = $row{'dog_nfid'};
+		 $placement= $row['placement'];
+		 $dog_nfid = $row['dog_nfid'];
 
 		$query3 = "SELECT * FROM nf_dog where nfid= '$dog_nfid'";
 		$result3 = mysqli_query($conn, $query3) or DIE("Could not Execute Query ");
 		$row3 = mysqli_fetch_array($result3);
-		$name = $row3{'registeredName'};
-		$sex = $row3{'sex'};
-		$breed = getBreedAbbr($row3{'breed'});
-		$akcNumber = $row3{'akcNumber'};
+		$name = $row3['registeredName'];
+		$sex = $row3['sex'];
+		$breed = getBreedAbbr($row3['breed']);
+		$akcNumber = $row3['akcNumber'];
 
 		echo " &#160 $placement - ";
 		if( $akcNumber != 'WITHHELD' )

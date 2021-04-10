@@ -19,8 +19,8 @@ if( $row == null ) {
 	header("Location: ftHome.php4");
 }
 
-$nfid = $row{'nfid'};
-$destinationWindow = $row{'destinationWindow'};
+$nfid = $row['nfid'];
+$destinationWindow = $row['destinationWindow'];
 
 if( strcmp($destinationWindow, "dog") == 0 ) {
 	$link = "dog.php4?dogId=".encryptIt($nfid);

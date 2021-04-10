@@ -71,10 +71,10 @@ Judge Name:
 		$i++; 
 		print "<tr><td>&#160</td>";
 
-		$firstName = $row{'firstName'};
-		$lastName = $row{'lastName'};
-		$akcName = $row{'akcName'};
-		$nfid = $row{'nfid'};
+		$firstName = $row['firstName'];
+		$lastName = $row['lastName'];
+		$akcName = $row['akcName'];
+		$nfid = $row['nfid'];
 
 		print "<td>";
 		if( strlen($firstName) > 0 && strlen($lastName) > 0 )

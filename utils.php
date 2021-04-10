@@ -6,7 +6,7 @@ function getTotalHits($conn)
 	$result = mysqli_query($conn, $sql) or DIE ("query failed");
 	//$result = mysqli_query($conn, $sql) or DIE ($sql." ".mysql_error());
 	$line = mysqli_fetch_array($result);
-	return $line{'hitSum'};
+	return $line['hitSum'];
 }
 
 function getHits($conn, $pageId)
@@ -25,7 +25,7 @@ function getHits($conn, $pageId)
 	}
 	else
 	{
-		$hits = $line{'hits'} + 1;
+		$hits = $line['hits'] + 1;
 		$sql2 = "update hitCounter set hits = ".$hits." where pageId = $fieldValue";
 		$result = mysqli_query($conn, $sql2) ;
 	}
@@ -43,7 +43,7 @@ function systemIsBusy($conn)
 	$result = mysqli_query($conn, "select * from nf_busy") or die (mysqli_error($conn));
 	$line = mysqli_fetch_array($result);
 
-	if ( $line{'busy'} == 1 ) 
+	if ( $line && $line['busy'] == 1 ) 
 	{
 		print "<p><center>Down for just a few minutes.  Skip";
 		return true;
@@ -74,7 +74,7 @@ $breeds = array (
 	foreach (array_keys($breeds) as $b)
 	{
 		if( $b == $fullName )
-			return $breeds{$b};
+			return $breeds[$b];
 	}
 }
 
@@ -84,7 +84,7 @@ function getEarliestTrial($conn)
 	//$result = mysqli_query($conn, $sql) or DIE ($sql." ".mysql_error());
 	$result = mysqli_query($conn, $sql) or DIE ("query failed");
 	$line = mysqli_fetch_array($result);
-	print "Events entered since: ".$line{'clubName'}." on ".$line{'startDate'};
+	print "Events entered since: ".$line['clubName']." on ".$line['startDate'];
 }
 
 
@@ -142,15 +142,15 @@ function listSomeTrials($conn, $searchString, $maximum, $dateFlag)
 		$i++; 
 		print "<tr><td>&#160</td>";
 
-		$cn = str_replace("German Shorthaired Pointer", "GSP", $row{'clubName'});
+		$cn = str_replace("German Shorthaired Pointer", "GSP", $row['clubName']);
 		$cn = str_replace("German Wirehaired Pointer", "GWP", $cn);
 
 
-		$location = $row{'location'};
-		$state = $row{'state'};
-		$city = $row{'city'};
-		$eventNumber = $row{'eventNumber'};
-		$trial_nfid = $row{'nfid'};
+		$location = $row['location'];
+		$state = $row['state'];
+		$city = $row['city'];
+		$eventNumber = $row['eventNumber'];
+		$trial_nfid = $row['nfid'];
 
 
 		//$sql2 = "select count(distinct(nf_dog.nfid)) kount from ".
@@ -163,10 +163,10 @@ function listSomeTrials($conn, $searchString, $maximum, $dateFlag)
 
 		//$line2 = mysqli_fetch_array($result2);
 
-		//$vcount = $line2{'kount'};
+		//$vcount = $line2['kount'];
 		print "<td valign='top'>";
 
-		//print "&#160 ".$row{fmtDate}."</td><td>";
+		//print "&#160 ".$row[fmtDate]."</td><td>";
 		//
 		
 		print"<button type='submit' class='db-link' name='eventId' value='".encryptIt($trial_nfid)."'>".$cn."</button>";
@@ -174,7 +174,7 @@ function listSomeTrials($conn, $searchString, $maximum, $dateFlag)
 		print "</td><td align='left'>";
 		print $city.", ".$state;
 		print "</td><td align='right'>";
-		print $row{'fmtDate'};
+		print $row['fmtDate'];
 
 		print "</td></tr>";
 
@@ -243,7 +243,7 @@ function getJudge($conn, $judge_nfid)
 
 function getStarters($conn, $stake_nfid)
 {
-	$stmt = $conn->prepare("SELECT SUM(starters) sum FROM nf_starters where stake_nfid = '$stake_nfid'");
+	$stmt = $conn->prepare("SELECT SUM(starters) sum FROM nf_starters where stake_nfid = ?");
 	$stmt->bind_param('s', $stake_nfid); // 's' specifies the variable type => 'string'
 	$stmt->execute();
 	$result = $stmt->get_result();
@@ -298,24 +298,24 @@ function listSomeDogs($conn, $dogSearchString, $ownerSearchString, $breed, $maxi
 		{ 
 
 			$query2="select * from dogInfo where akcNumber = '".
-				$row{'akcNumber'}."'";
+				$row['akcNumber']."'";
 			$result2 = mysqli_query($conn, $query2) or DIE(" query failed ");
 			$row2 = mysqli_fetch_array($result2);
 
 			$akcTitles = "";
 
-			$registeredName = getNameHttp($row2, $row{'registeredName'});
+			$registeredName = getNameHttp($row2, $row['registeredName']);
 
 			$i++; 
 
-			$dog_nfid = $row{'NFID'};
+			$dog_nfid = $row['NFID'];
 			print "<tr><td>&#160</td>";
 			print "<td>";
 			print "<button type='submit' class='db-link' name='dogId'".  
 				"value='".encryptIt($dog_nfid)."'>".$registeredName." </button>";
 
-			print " - ".$row{'breed'};
-			print " - ".$row{'owners'};
+			print " - ".$row['breed'];
+			print " - ".$row['owners'];
 			print "</td></tr>";
 		}
 
@@ -360,9 +360,9 @@ function getNameHttp($dogInfoRow, $regName)
 {
 	if( $dogInfoRow )
 	{
-		$oTitles = trim($dogInfoRow{'otherTitles'});
-		$aTitles = trim($dogInfoRow{'akcTitles'});
-		$bTitles = trim($dogInfoRow{'backTitles'});
+		$oTitles = trim($dogInfoRow['otherTitles']);
+		$aTitles = trim($dogInfoRow['akcTitles']);
+		$bTitles = trim($dogInfoRow['backTitles']);
 
 		$fTitles = trim(getTitleDisplay($aTitles, $oTitles));
 

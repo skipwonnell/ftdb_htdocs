@@ -22,16 +22,16 @@ class DogInfoDB
 					."VALUES(?,?,?,?,?,?,?,?,?,?)";
 			$stmt = $this->db->prepare($sql);
 			$stmt->bind_param('ssssssssss', 
-					$dogInfoBean{'akcNumber'}, 
-					$dogInfoBean{'registeredName'},
-					$dogInfoBean{'akcTitles'}, 
-					$dogInfoBean{'email'},
-					$dogInfoBean{'url'},
-					$dogInfoBean{'sireAkcNumber'},
-					$dogInfoBean{'damAkcNumber'},
-					$dogInfoBean{'callName'},
-					$dogInfoBean{'otherTitles'},
-					$dogInfoBean{'backTitles'});
+					$dogInfoBean['akcNumber'], 
+					$dogInfoBean['registeredName'],
+					$dogInfoBean['akcTitles'], 
+					$dogInfoBean['email'],
+					$dogInfoBean['url'],
+					$dogInfoBean['sireAkcNumber'],
+					$dogInfoBean['damAkcNumber'],
+					$dogInfoBean['callName'],
+					$dogInfoBean['otherTitles'],
+					$dogInfoBean['backTitles']);
 			$stmt->execute();
 	}
 
@@ -83,8 +83,8 @@ class DogInfoDB
 			$result=$stmt->get_result();
 			$suggestParent = "";
 			while( $row = $result->fetch_assoc() ) {
-				$currentAkcNumber = $row{'akcNumber'};
-				$currentParentAkcNumber = $row{$varName};
+				$currentAkcNumber = $row['akcNumber'];
+				$currentParentAkcNumber = $row[$varName];
 				if( !empty($currentParentAkcNumber ) ) {
 					if( $currentAkcNumber == $akcNumber ) {
 						$suggestParent = $currentParentAkcNumber;

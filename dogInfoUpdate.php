@@ -1,5 +1,4 @@
 
-
 <?php session_start() ?>
 <html>
 <head>
@@ -91,7 +90,7 @@ class DogInfoForm {
 		$this->backTitles = new FormValue ( "Backend Titles", "backendTitles", "" );
 	}
 	public function initFromArray($a) {
-		$this->akcNumberForQuery = $a {'akcNumberForQuery'};
+		$this->akcNumberForQuery = $a ['akcNumberForQuery'];
 		$this->akcNumber->setValueFromArray ( $a );
 		$this->registeredName->setValueFromArray ( $a );
 		$this->akcTitles->setValueFromArray ( $a );

@@ -32,11 +32,11 @@ Search by dog name or owner name.  <b>Don't include titles!</b>
 </td></tr> </table> </td></tr> </td></tr> </table> </td></tr> <tr><td><p>&#160 </td></tr> <tr><td >
 
 Dog Name: </td><td> <input type="text"   size="15"
-name="dogSearchString" value="<?php  echo $_SESSION{'dogSearchString'}; ?>" >
+name="dogSearchString" value="<?php  echo $_SESSION['dogSearchString']; ?>" >
 </td></tr> <tr><td>
 
 Owner: </td><td> <input type="text"   size="15"
-name="ownerSearchString" value="<?php echo $_SESSION{'ownerSearchString'}; ?>" >
+name="ownerSearchString" value="<?php echo $_SESSION['ownerSearchString']; ?>" >
 <br> </td></tr> <tr><td>
 
 Breed:&#160 </td><td> 
@@ -44,12 +44,12 @@ Breed:&#160 </td><td>
 <?php
 	foreach ( array_keys($breedValues) as $key )
 	{
-		$breed = $breedValues{$key};
-		if ( $_SESSION{'breed'} == $breed )
+		$breed = $breedValues[$key];
+		if ( $_SESSION['breed'] == $breed )
 			echo "<option selected = \"yes\" >";
 		else
 			echo "<option>";
-		echo $breedValues{$key};
+		echo $breedValues[$key];
 		echo "</option>";
 	}
 ?>
@@ -73,7 +73,7 @@ Breed:&#160 </td><td>
 	print "<br>hp: ".$_SESSION['hasPosted'];
  */
 	if ( $_SESSION['hasPosted'] )
-		listSomeDogs($conn, $_SESSION{'dogSearchString'}, $_SESSION{'ownerSearchString'}, $_SESSION['breed'], 50);
+		listSomeDogs($conn, $_SESSION['dogSearchString'], $_SESSION['ownerSearchString'], $_SESSION['breed'], 50);
 ?>
 </td></tr></table>
 </body>
